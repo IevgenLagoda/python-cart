@@ -10,6 +10,7 @@ class Cart:
         self.products = {}
 
     def addProductToCart(self, product, amount=1, discount=0):
+        # to check with CartProduct
         id = product.getId()
         if id not in self.products:
             self.products[id] = CartProduct(product, amount, discount)
