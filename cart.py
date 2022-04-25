@@ -1,7 +1,7 @@
 from product import Product
 from user import User
 from cartproduct import ProductCart # переименование класса
-from userloginpassword import UserLoginPassword
+from userloginpassword import UserAuth
 
 class Cart:
     def __init__(self, user, loginpassword):
@@ -20,8 +20,6 @@ class Cart:
     def isUserValid(self):
         return self.user.isFullNameExists() and self.user.isAddressExists() and self.user.isPhoneNumberExists()
 
-    def UserAuth(self, login, password):
-        return self.loginpassword.getLogin() == login and self.loginpassword.getPassword() == password  # переименование метода, замена if на return, изменения местарасположения кода метода в классе
 
     def getTotalCartPrice(self):
         total = 0
@@ -53,7 +51,7 @@ if __name__ == "__main__":
     cartUser = User("Den", "Vasin", "", "")
     product1 = Product(1, 'notebook HP', 400)
     product2 = Product(2, 'notebook Acer', 350)
-    loginpassword = UserLoginPassword('den2001@ukr.net', 'qwerty')
+    loginpassword = UserAuth('den2001@ukr.net', 'qwerty')
 
     cart = Cart(cartUser, loginpassword)
     cart.addProductToCart(product1, 1, 10)
@@ -61,4 +59,3 @@ if __name__ == "__main__":
 
     print(cart.getTotalCartPrice())
     print(cart.removeProductById(2, 2))
-    print(cart.UserAuth('den2001@ukr.net', 'password'))

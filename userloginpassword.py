@@ -1,29 +1,28 @@
 from user import User
 
-class UserLoginPassword(User):
-    def __init__(self, login, password):
-        self.login = login
+class UserAuth(User): # переименование класса
+    def __init__(self, email, password):
+        self.email = email
         self.password = password
 
-    def isLoginExist(self):
-        if len(self.login) == 0:
-            return False
-        return True
+    def isEmailExists(self):
+        return len(self.email) > 0
 
-    def isPasswordExist(self):
-        if len(self.password) == 0:
-            return False
-        return True
+    def isPasswordExists(self):
+        return len(self.password) > 0
 
-    def getLogin(self):
-        if self.isLoginExist():
-            return self.login
+    def getEmail(self):
+        if self.isEmailExists():
+            return self.email
         return False
 
     def getPassword(self):
-        if self.isPasswordExist():
+        if self.isPasswordExists():
             return self.password
         return False
+
+    def canBeLogged(self, email, password):
+        return self.getEmail() == email and self.getPassword() == password  # замена if на return, перемещение метода из класса Cart в класс UserAuth
 
 
 
