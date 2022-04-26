@@ -2,7 +2,6 @@ from product import Product
 from user import User
 from cartproduct import ProductCart # переименование класса
 
-
 class Cart:
     def __init__(self, user):
         self.user = user
