@@ -1,12 +1,11 @@
 from product import Product
 from user import User
 from cartproduct import ProductCart # переименование класса
-from userloginpassword import UserAuth
+
 
 class Cart:
-    def __init__(self, user, loginpassword):
+    def __init__(self, user):
         self.user = user
-        self.loginpassword = loginpassword
         self.products = {}
 
     def addProductToCart(self, product, amount=1, discount=0):
@@ -20,6 +19,8 @@ class Cart:
     def isUserValid(self):
         return self.user.isFullNameExists() and self.user.isAddressExists() and self.user.isPhoneNumberExists()
 
+    def isUserAuthValid(self, login, password):
+        return self.user.canBeLogged(login, password)
 
     def getTotalCartPrice(self):
         total = 0
@@ -48,14 +49,14 @@ class Cart:
 
 
 if __name__ == "__main__":
-    cartUser = User("Den", "Vasin", "", "")
+    cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
     product1 = Product(1, 'notebook HP', 400)
     product2 = Product(2, 'notebook Acer', 350)
-    loginpassword = UserAuth('den2001@ukr.net', 'qwerty')
 
-    cart = Cart(cartUser, loginpassword)
+    cart = Cart(cartUser)
     cart.addProductToCart(product1, 1, 10)
     cart.addProductToCart(product2, 4, 20)
 
     print(cart.getTotalCartPrice())
     print(cart.removeProductById(2, 2))
+    print(cart.isUserAuthValid("den2001@ukr.net", "qwerty"))
