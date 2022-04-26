@@ -37,9 +37,7 @@ class User:
         return ''
 
     def isPhoneNumberExists(self):
-        if len(self.tel) == 0:
-            return False
-        return True
+        return len(self.tel) > 0
 
     def isEmailExists(self):
         return len(self.email) > 0
