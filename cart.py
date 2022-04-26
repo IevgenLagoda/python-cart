@@ -12,7 +12,7 @@ class Cart:
         if id not in self.products:
             self.products[id] = ProductCart(product, amount, discount)
         else:
-            self.products[id].setAmount(self.products[id].getAmount + amount)
+            self.products[id].setAmount(self.products[id].getAmount() + amount)
         self.products[id].setDiscount(discount)
 
     def isUserValid(self):
@@ -48,7 +48,7 @@ class Cart:
 
 
 if __name__ == "__main__":
-    cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
+    cartUser = User("Den", "", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
     product1 = Product(1, 'notebook HP', 400)
     product2 = Product(2, 'notebook Acer', 350)
 
@@ -58,4 +58,5 @@ if __name__ == "__main__":
 
     print(cart.getTotalCartPrice())
     print(cart.removeProductById(2, 2))
+    print(cart.isUserValid())
     print(cart.isUserAuthValid("den2001@ukr.net", "qwerty"))

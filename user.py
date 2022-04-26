@@ -18,23 +18,21 @@ class User:
             return False
         return True
 
+    def isAddressExists(self):
+        return len(self.address) > 0
+
     def getAddress(self):
-        if self.isAddressExists():
+        if self.isAddressExists() == False:
             return ''
         return self.address
-
-    def isAddressExists(self):
-        if len(self.address) == 0:
-            return False
-        return True
 
     def setAddress(self, address):
        self.address = address
 
     def getPhoneNumber(self):
-        if self.isPhoneNumberExists():
-            return self.tel
-        return ''
+        if self.isPhoneNumberExists() == False:
+            return False
+        return self.tel
 
     def isPhoneNumberExists(self):
         return len(self.tel) > 0
@@ -42,18 +40,18 @@ class User:
     def isEmailExists(self):
         return len(self.email) > 0
 
+    def getEmail(self):
+        if self.isEmailExists() == False:
+            return False
+        return self.email
+
     def isPasswordExists(self):
         return len(self.password) > 0
 
-    def getEmail(self):
-        if self.isEmailExists():
-            return self.email
-        return False
-
     def getPassword(self):
-        if self.isPasswordExists():
-            return self.password
-        return False
+        if self.isPasswordExists() == False:
+            return False
+        return self.password
 
     def canBeLogged(self, email, password):
         return self.getEmail() == email and self.getPassword() == password  # замена if на return, перемещение метода из класса Cart в класс UserAuth
