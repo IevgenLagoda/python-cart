@@ -1,6 +1,6 @@
 from product import Product
 from user import User
-from cartproduct import ProductCart # переименование класса
+from productcart import ProductCart  # переименование класса
 
 class Cart:
     def __init__(self, user):
@@ -9,14 +9,15 @@ class Cart:
 
     def addProductToCart(self, product, amount=1, discount=0):
         id = product.getId()
-        if id not in self.products:
-            self.products[id] = ProductCart(product, amount, discount)
-        else:
-            self.products[id].setAmount(self.products[id].getAmount() + amount)
-        self.products[id].setDiscount(discount)
+        if amount > 0:
+            if id not in self.products:
+                self.products[id] = ProductCart(product, amount, discount)
+            else:
+                self.products[id].setAmount(self.products[id].getAmount() + amount)
+            self.products[id].setDiscount(discount)
 
     def isUserValid(self):
-        return self.user.isFullNameExists() and self.user.isAddressExists() and self.user.isPhoneNumberExists()
+        return self.user.isUserDataExists()
 
     def isUserAuthValid(self, login, password):
         return self.user.canBeLogged(login, password)
@@ -40,7 +41,7 @@ class Cart:
     def removeProductById(self, id, amount=0):
         if self.isCartEmpty():
             raise 'Cart is Empty'  # вызов исключение если корзина пуста
-        if amount == 0 or amount >= self.products[id].getAmount():
+        if amount >= self.products[id].getAmount():
             del self.products[id]
         else:
             self.products[id].setAmount(self.products[id].getAmount() - amount)
@@ -48,12 +49,12 @@ class Cart:
 
 
 if __name__ == "__main__":
-    cartUser = User("Den", "", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
+    cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
     product1 = Product(1, 'notebook HP', 400)
     product2 = Product(2, 'notebook Acer', 350)
 
     cart = Cart(cartUser)
-    cart.addProductToCart(product1, 1, 10)
+    cart.addProductToCart(product1, 0, 10)
     cart.addProductToCart(product2, 4, 20)
 
     print(cart.getTotalCartPrice())

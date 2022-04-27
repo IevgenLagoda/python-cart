@@ -14,11 +14,11 @@ class ProductCart(Product):
     def getAmount(self):
         return self.amount
 
-    def getDiscount(self):
-        return self.discount
-
     def setAmount(self, amount):
         self.amount = amount
+
+    def getDiscount(self):
+        return self.discount
 
     def setDiscount(self, discount):
         self.discount = discount

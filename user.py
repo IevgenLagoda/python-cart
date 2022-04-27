@@ -29,20 +29,23 @@ class User:
     def setAddress(self, address):
        self.address = address
 
-    def getPhoneNumber(self):
-        if self.isPhoneNumberExists() == False:
-            return False
-        return self.tel
-
     def isPhoneNumberExists(self):
         return len(self.tel) > 0
+
+    def getPhoneNumber(self):
+        if self.isPhoneNumberExists() == False:
+            return ''
+        return self.tel
+
+    def isUserDataExists(self):
+        return self.isFullNameExists() and self.isPhoneNumberExists() and self.isAddressExists()
 
     def isEmailExists(self):
         return len(self.email) > 0
 
     def getEmail(self):
         if self.isEmailExists() == False:
-            return False
+            return ''
         return self.email
 
     def isPasswordExists(self):
@@ -50,7 +53,7 @@ class User:
 
     def getPassword(self):
         if self.isPasswordExists() == False:
-            return False
+            return ''
         return self.password
 
     def canBeLogged(self, email, password):
