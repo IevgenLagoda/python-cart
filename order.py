@@ -6,9 +6,9 @@ from productcart import ProductCart
 
 class OrderStatus(enum.Enum):
 
-    new = ('Заказ оформлен', 'Проверяется наличение товара на складе')
-    order_processing = ('Проверка наличия товара на складе', 'Поготовка товара к отправке')
-    delivery = ('Подготовка товара к отправке', 'Товар передан курьеру', 'Товар доставлен клиенту')
+    new = 'Заказ оформлен'
+    order_processing = 'Отбратока заказ складом'
+    delivery = 'Товар отправлен'
 
 class Order:
     def __init__(self, user, products, order_status):
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     cart.addProductToCart(product1, 0, 10)
     cart.addProductToCart(product2, 4, 20)
 
-    order = Order(cart, cart.products, OrderStatus.new.value[0])
-    print(OrderStatus.new.value[0])
+    order = Order(cart, cart.products, OrderStatus.new.value)
+    print(OrderStatus.new.value)
     print(order.getOrderAmount())
     print(order.getDeliveryAddress())
