@@ -22,6 +22,15 @@ class Order:
     def getDeliveryAddress(self):
         return self.user.user.getAddress()
 
+    def getDeliveryStatus(self):
+        return self.order_status
+
+    def getOrderUserData(self):
+        return [self.user.user.getFullName(), order.getDeliveryAddress(),
+                self.user.user.getPhoneNumber(), self.user.user.getEmail()]
+
+    def getOrderProdutsData(self):
+
 
 if __name__ == "__main__":
     cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
@@ -29,10 +38,11 @@ if __name__ == "__main__":
     product2 = Product(2, 'notebook Acer', 350)
 
     cart = Cart(cartUser)
-    cart.addProductToCart(product1, 0, 10)
+    cart.addProductToCart(product1, 2, 10)
     cart.addProductToCart(product2, 4, 20)
 
     order = Order(cart, cart.products, OrderStatus.new.value)
     print(OrderStatus.new.value)
     print(order.getOrderAmount())
     print(order.getDeliveryAddress())
+    print(order.getOrderUserData())
