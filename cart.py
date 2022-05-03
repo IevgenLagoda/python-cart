@@ -8,6 +8,7 @@ class Cart:
         self.products = {}
 
     def addProductToCart(self, product, amount=1, discount=0):
+        # TODO: check if amount == 0 and return nothing.
         id = product.getId()
         if amount > 0:
             if id not in self.products:
