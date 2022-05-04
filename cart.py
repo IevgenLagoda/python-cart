@@ -10,12 +10,13 @@ class Cart:
     def addProductToCart(self, product, amount=1, discount=0):
         # TODO: check if amount == 0 and return nothing.
         id = product.getId()
-        if amount > 0:
-            if id not in self.products:
-                self.products[id] = ProductCart(product, amount, discount)
-            else:
-                self.products[id].setAmount(self.products[id].getAmount() + amount)
-            self.products[id].setDiscount(discount)
+        if amount == 0:
+            return
+        if id not in self.products:
+            self.products[id] = ProductCart(product, amount, discount)
+        else:
+            self.products[id].setAmount(self.products[id].getAmount() + amount)
+        self.products[id].setDiscount(discount)
 
     def isUserValid(self):
         return self.user.isUserDataExists()
@@ -47,7 +48,6 @@ class Cart:
         else:
             self.products[id].setAmount(self.products[id].getAmount() - amount)
         return self.products[id].getAmount()
-
 
 if __name__ == "__main__":
     cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
