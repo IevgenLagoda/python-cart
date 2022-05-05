@@ -3,6 +3,7 @@ from cart import Cart
 from user import User
 from product import Product
 
+
 class OrderStatus(enum.Enum):
 
     new = 'Заказ оформлен'
