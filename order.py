@@ -10,13 +10,14 @@ class OrderStatus(enum.Enum):
     order_processing = 'Отбратока заказ складом'
     delivery = 'Товар отправлен'
 
-# TODO: class should be besed on the Cart or to have self.cart
 class Order:
     def __init__(self, user, products, order_status):
         self.cart = Cart(user)
+        # TBD: discuss overload.
         for product, amount, discount in products:
             self.cart.addProductToCart(product, amount, discount)
         self.order_status = order_status
+        # TODO: remove the next line.
         print(self.cart.products)
 
 
@@ -31,7 +32,7 @@ class Order:
             total_discount += float(product_values.getDiscount())
         return total_discount
 
-    # TODO: should use direct method from User
+    # TODO: should use direct method from User (not from cart)
     def getDeliveryAddress(self):
         return self.cart.user.getAddress()
 
@@ -59,13 +60,12 @@ class Order:
         for line in file_write_list:
             order.write('- {} \n'.format(line))
 
-
 if __name__ == "__main__":
     cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
     product1 = Product(1, 'notebook HP', 400)
     product2 = Product(2, 'notebook Acer', 350)
 
-    # TODO: 1st param shoyld be cartUser.
+    # TODO: 3red param should be OrderStatus memeber, not a vlaue.
     order = Order(cartUser, [(product1, 2, 10), (product2, 4, 20)], OrderStatus.new.value)
     print(order.getOrderAmount())
     print(order.getDeliveryAddress())
