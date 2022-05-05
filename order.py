@@ -13,12 +13,13 @@ class OrderStatus(enum.Enum):
 class Order:
     def __init__(self, user, products, order_status):
         self.user = user
-        self.products = products
+        self.cart = {cart.addProductToCart(product, amount, discount) for product, amount, discount in products}
         self.order_status = order_status
+        print(cart.products)
 
     def getOrderAmount(self):
         # TODO: we can't use cart from outside of the class.
-        return cart.getTotalCartPrice()
+        return self.cart.getTotalCartPrice()
 
     def getOrderDicount(self):
         # TODO: can we use something from Cart here?
@@ -29,7 +30,7 @@ class Order:
 
     # TODO: should use direct method from User
     def getDeliveryAddress(self):
-        return self.user.user.getAddress()
+        return self.user.getAddress()
 
     # TODO: we have to store status as enum member but return only value
     def getDeliveryStatus(self):
@@ -66,7 +67,7 @@ if __name__ == "__main__":
     cart.addProductToCart(product2, 4, 20)
 
     # TODO: 1st param shoyld be cartUser.
-    order = Order(cart, cart.products, OrderStatus.new.value)
+    order = Order(cart, [[product1, 2, 10], [product2, 4, 20]], OrderStatus.new.value)
     print(order.getOrderAmount())
     print(order.getDeliveryAddress())
     print(OrderStatus.new.value)
