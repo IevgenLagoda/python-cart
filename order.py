@@ -27,7 +27,7 @@ class Order:
     def getOrderDicount(self):
         # TODO: can we use something from Cart here?
         total_discount = 0
-        for product_values in self.products.values():
+        for product_values in self.cart.products.values():
             total_discount += float(product_values.getDiscount())
         return total_discount
 
