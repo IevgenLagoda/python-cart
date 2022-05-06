@@ -33,6 +33,12 @@ class Cart:
             total += self.products[id].getProductTotalPrice()
         return total
 
+    def getTotalDicount(self):
+        total_discount = 0
+        for product_values in self.products.values():
+            total_discount += float(product_values.getDiscount())
+        return total_discount
+
     def isCartEmpty(self):
         return len(self.products) == 0
 
@@ -63,3 +69,4 @@ if __name__ == "__main__":
     print(cart.removeProductById(2, 2))
     print(cart.isUserValid())
     print(cart.isUserAuthValid("den2001@ukr.net", "qwerty"))
+    print(cart.getTotalDicount())

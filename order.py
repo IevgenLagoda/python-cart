@@ -1,14 +1,12 @@
-import enum
+from enum import Enum, auto
 from cart import Cart
 from user import User
 from product import Product
 
-
-class OrderStatus(enum.Enum):
-
-    new = 'Заказ оформлен'
-    order_processing = 'Отбратока заказ складом'
-    delivery = 'Товар отправлен'
+class OrderStatus(Enum):
+    new = auto
+    order_processing = auto
+    delivery = auto
 
 class Order:
     def __init__(self, user, products, order_status):
@@ -18,19 +16,14 @@ class Order:
             self.cart.addProductToCart(product, amount, discount)
         self.order_status = order_status
         # TODO: remove the next line.
-        print(self.cart.products)
-
 
     def getOrderAmount(self):
         # TODO: we can't use cart from outside of the class.
-        return self.cart.products.getTotalCartPrice()
+        return self.cart.getTotalCartPrice()
 
     def getOrderDicount(self):
         # TODO: can we use something from Cart here?
-        total_discount = 0
-        for product_values in self.cart.products.values():
-            total_discount += float(product_values.getDiscount())
-        return total_discount
+        return self.cart.getTotalDicount()
 
     # TODO: should use direct method from User (not from cart)
     def getDeliveryAddress(self):
@@ -42,7 +35,7 @@ class Order:
 
     def getOrderUserData(self):
         # TODO: we cna't use order.getDeliveryAddress()
-        return [self.cart.user.getFullName(), self.cart.user.getDeliveryAddress(),
+        return [self.cart.user.getFullName(), order.getDeliveryAddress(),
                 self.cart.user.getPhoneNumber(), self.cart.user.getEmail()]
 
     # TODO please check the name
@@ -52,13 +45,20 @@ class Order:
                         for product_values in self.cart.products.values()]
        return products_list
 
+    def importFile(self):
+        try:
+            with open('order.txt', 'w') as file_object:
+                order.exportToFile(file_object)
+        except IOError:
+            return 'File problem'
+
     # TODO: exprotToFile(self, filename) and can hanlde everything inside.
-    def getWriteFileOrder(self, order):
-        file_write_list = self.getOrderUserData() + self.getOrderProdutsData()
-        file_write_list.append(str(self.getOrderAmount()))
-        file_write_list.append(str(self.getOrderDicount()))
+    def exportToFile(self, file_object):
+        file_write_list = order.getOrderUserData() + order.getOrderProdutsData()
+        file_write_list.append(str(order.getOrderAmount()))
+        file_write_list.append(str(order.getOrderDicount()))
         for line in file_write_list:
-            order.write('- {} \n'.format(line))
+            file_object.write('- {} \n'.format(line))
 
 if __name__ == "__main__":
     cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
@@ -66,12 +66,8 @@ if __name__ == "__main__":
     product2 = Product(2, 'notebook Acer', 350)
 
     # TODO: 3red param should be OrderStatus memeber, not a vlaue.
-    order = Order(cartUser, [(product1, 2, 10), (product2, 4, 20)], OrderStatus.new.value)
+    order = Order(cartUser, [(product1, 2, 10), (product2, 4, 20)], OrderStatus.new)
     print(order.getOrderAmount())
     print(order.getDeliveryAddress())
-    print(OrderStatus.new.value)
-    try:
-        with open('order.txt', 'w') as results:
-            order.getWriteFileOrder(results)
-    except IOError:
-        print('File problem')
+    print(order.getDeliveryStatus())
+
