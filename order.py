@@ -4,14 +4,16 @@ from user import User
 from product import Product
 
 class OrderStatus(Enum):
-    new = auto
-    order_processing = auto
-    delivery = auto
+    new = auto()
+    order_processing = auto()
+    delivery = auto()
 
 class Order:
     def __init__(self, user, products, order_status):
         self.cart = Cart(user)
         # TBD: discuss overload.
+        if len(products) == 0:
+            return
         for product, amount, discount in products:
             self.cart.addProductToCart(product, amount, discount)
         self.order_status = order_status
@@ -31,7 +33,7 @@ class Order:
 
     # TODO: we have to store status as enum member but return only value
     def getDeliveryStatus(self):
-        return self.order_status
+        return self.order_status.value
 
     def getOrderUserData(self):
         # TODO: we cna't use order.getDeliveryAddress()
@@ -47,18 +49,18 @@ class Order:
 
     def importFile(self):
         try:
-            with open('order.txt', 'w') as file_object:
-                order.exportToFile(file_object)
+            with open('order.txt', 'w') as file:
+                order.exportToFile(file)
         except IOError:
             return 'File problem'
 
     # TODO: exprotToFile(self, filename) and can hanlde everything inside.
-    def exportToFile(self, file_object):
+    def exportToFile(self, file):
         file_write_list = order.getOrderUserData() + order.getOrderProdutsData()
         file_write_list.append(str(order.getOrderAmount()))
         file_write_list.append(str(order.getOrderDicount()))
         for line in file_write_list:
-            file_object.write('- {} \n'.format(line))
+            file.write('- {} \n'.format(line))
 
 if __name__ == "__main__":
     cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
@@ -70,4 +72,5 @@ if __name__ == "__main__":
     print(order.getOrderAmount())
     print(order.getDeliveryAddress())
     print(order.getDeliveryStatus())
+    order.importFile()
 
