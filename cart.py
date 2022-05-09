@@ -9,7 +9,8 @@ class Cart:
         self.products = {}
 
     def addProductToCart(self, product, amount=1, discount=0):
-        # TODO: check if amount == 0 and return nothing.
+        # TODO: to check the instance of `product`. We can use `isinstance`.
+        # TODO: we have to support `Product` and `ProductCart` typex.
         id = product.getId()
         if amount == 0:
             return

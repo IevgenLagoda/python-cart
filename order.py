@@ -11,32 +11,26 @@ class OrderStatus(Enum):
 class Order:
     def __init__(self, user, products, order_status):
         self.cart = Cart(user)
-        # TBD: discuss overload.
         if len(products) == 0:
             return
         for product, amount, discount in products:
             self.cart.addProductToCart(product, amount, discount)
         self.order_status = order_status
-        # TODO: remove the next line.
 
     def getOrderAmount(self):
-        # TODO: we can't use cart from outside of the class.
         return self.cart.getTotalCartPrice()
 
     def getOrderDicount(self):
-        # TODO: can we use something from Cart here?
         return self.cart.getTotalDicount()
 
     # TODO: should use direct method from User (not from cart)
     def getDeliveryAddress(self):
         return self.cart.user.getAddress()
 
-    # TODO: we have to store status as enum member but return only value
     def getDeliveryStatus(self):
         return self.order_status.value
 
     def getOrderUserData(self):
-        # TODO: we cna't use order.getDeliveryAddress()
         return [self.cart.user.getFullName(), order.getDeliveryAddress(),
                 self.cart.user.getPhoneNumber(), self.cart.user.getEmail()]
 
@@ -54,7 +48,9 @@ class Order:
         except IOError:
             return 'File problem'
 
-    # TODO: exprotToFile(self, filename) and can hanlde everything inside.
+    # TODO: exprotToFile(self, filename)
+    # TODO: - creates the list with records for export
+    # TODo: - call another method with the list and filename
     def exportToFile(self, file):
         file_write_list = order.getOrderUserData() + order.getOrderProdutsData()
         file_write_list.append(str(order.getOrderAmount()))
