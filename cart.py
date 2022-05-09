@@ -15,10 +15,14 @@ class Cart:
         if amount == 0:
             return
         if id not in self.products:
-            self.products[id] = ProductCart(product, amount, discount)
+            if isinstance(product, Product):
+                self.products[id] = ProductCart(product, amount, discount)
+            elif isinstance(product, ProductCart):
+                self.products[id] = (product, amount, discount)
         else:
             self.products[id].setAmount(self.products[id].getAmount() + amount)
         self.products[id].setDiscount(discount)
+        print(self.products)
 
     def isUserValid(self):
         return self.user.isUserDataExists()
@@ -63,6 +67,8 @@ if __name__ == "__main__":
     product2 = Product(2, 'notebook Acer', 350)
 
     cart = Cart(cartUser)
+    productCart1 = ProductCart(product1, 1, 10)
+    productCart2 = ProductCart(product2, 2, 20)
     cart.addProductToCart(product1, 0, 10)
     cart.addProductToCart(product2, 4, 20)
 
