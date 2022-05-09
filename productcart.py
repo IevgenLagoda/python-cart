@@ -1,5 +1,6 @@
 from product import Product
 
+# TODO: add unittests
 class ProductCart(Product):
 
     def __init__(self, product, amount, discount):
@@ -25,12 +26,4 @@ class ProductCart(Product):
 
     def getProductTotalPrice(self):
         return self.getPrice() * self.amount - self.discount
-
-
-
-
-
-
-
-
-
+    

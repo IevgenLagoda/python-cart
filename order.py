@@ -67,10 +67,8 @@ if __name__ == "__main__":
     product1 = Product(1, 'notebook HP', 400)
     product2 = Product(2, 'notebook Acer', 350)
 
-    # TODO: 3red param should be OrderStatus memeber, not a vlaue.
     order = Order(cartUser, [(product1, 2, 10), (product2, 4, 20)], OrderStatus.new)
     print(order.getOrderAmount())
     print(order.getDeliveryAddress())
     print(order.getDeliveryStatus())
     order.importFile()
-
