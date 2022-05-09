@@ -30,7 +30,6 @@ class Order:
     def getDeliveryAddress(self):
         return self.cart.user.getAddress()
 
-    # TODO: we have to store status as enum member but return only value
     def getDeliveryStatus(self):
         return self.order_status.value
 
