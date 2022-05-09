@@ -8,6 +8,9 @@ class OrderStatus(Enum):
     order_processing = auto()
     delivery = auto()
 
+    def __str__(self):
+        return 'Order status: {0}'.format(self.value)
+
 class Order:
     def __init__(self, user, products, order_status):
         self.cart = Cart(user)
