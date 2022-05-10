@@ -8,21 +8,21 @@ class Cart:
         self.user = user
         self.products = {}
 
-    def addProductToCart(self, product, amount=1, discount=0):
+    def addProductToCart(self, product):
         # TODO: to check the instance of `product`. We can use `isinstance`.
         # TODO: we have to support `Product` and `ProductCart` typex.
-        id = product.getId()
-        if amount == 0:
-            return
-        if id not in self.products:
-            if isinstance(product, Product):
-                self.products[id] = ProductCart(product, amount, discount)
-            elif isinstance(product, ProductCart):
-                self.products[id] = (product, amount, discount)
+        if isinstance(product, ProductCart):
+            id = product.getId ()
+            if product.getAmount == 0:
+                return
+            if id not in self.products:
+                self.products[id] = product
+            else:
+                self.products[id].setAmount (self.products[id].getAmount () + product.getAmount)
+            self.products[id].setDiscount(product.getDiscount())
         else:
-            self.products[id].setAmount(self.products[id].getAmount() + amount)
-        self.products[id].setDiscount(discount)
-        print(self.products)
+            product, amount, discount = product
+            self.addProductToCart(ProductCart(product, amount, discount))
 
     def isUserValid(self):
         return self.user.isUserDataExists()
@@ -69,8 +69,8 @@ if __name__ == "__main__":
     cart = Cart(cartUser)
     productCart1 = ProductCart(product1, 1, 10)
     productCart2 = ProductCart(product2, 2, 20)
-    cart.addProductToCart(product1, 0, 10)
-    cart.addProductToCart(product2, 4, 20)
+    cart.addProductToCart((product1, 0, 10))
+    cart.addProductToCart((product2, 4, 20))
 
     print(cart.getTotalCartPrice())
     print(cart.removeProductById(2, 2))

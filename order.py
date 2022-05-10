@@ -2,6 +2,7 @@ from enum import Enum, auto
 from cart import Cart
 from user import User
 from product import Product
+from productcart import ProductCart
 
 class OrderStatus(Enum):
     new = auto()
@@ -16,8 +17,8 @@ class Order:
         self.cart = Cart(user)
         if len(products) == 0:
             return
-        for product, amount, discount in products:
-            self.cart.addProductToCart(product, amount, discount)
+        for product in products:
+            self.cart.addProductToCart(product)
         self.order_status = order_status
         self.user = user
 
@@ -67,8 +68,9 @@ if __name__ == "__main__":
     cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
     product1 = Product(1, 'notebook HP', 400)
     product2 = Product(2, 'notebook Acer', 350)
+    productcart1 = ProductCart(product1, 2, 10)
 
-    order = Order(cartUser, [(product1, 2, 10), (product2, 4, 20)], OrderStatus.new)
+    order = Order(cartUser, [productcart1, (product2, 4, 20)], OrderStatus.new)
     print(order.getOrderAmount())
     print(order.getDeliveryAddress())
     print(order.getDeliveryStatus())
