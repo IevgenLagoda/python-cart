@@ -18,7 +18,7 @@ class Cart:
             if id not in self.products:
                 self.products[id] = product
             else:
-                self.products[id].setAmount(self.products[id].getAmount () + product.getAmount)
+                self.products[id].setAmount(self.products[id].getAmount() + product.getAmount)
             self.products[id].setDiscount(product.getDiscount())
         else:
             product, amount, discount = product
