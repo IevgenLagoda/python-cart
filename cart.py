@@ -12,7 +12,7 @@ class Cart:
         # TODO: to check the instance of `product`. We can use `isinstance`.
         # TODO: we have to support `Product` and `ProductCart` typex.
         if isinstance(product, ProductCart):
-            id = product.getId ()
+            id = product.getId()
             if product.getAmount == 0:
                 return
             if id not in self.products:
