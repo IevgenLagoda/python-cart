@@ -23,5 +23,4 @@ class TestProductCart(unittest.TestCase):
         self.assertEqual(productcart.getAmount(), 3)
         self.assertEqual(productcart.getDiscount(), 10)
 
-
 unittest.main()
