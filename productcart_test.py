@@ -8,7 +8,7 @@ class TestProductCart(unittest.TestCase):
         amount = 2
         discount = 20
         total_price = 180
-        productcart = ProductCart(Product(1, 'test', 100), amount, discount)
+        productcart = ProductCart(product, amount, discount)
         self.assertEqual(productcart.getProduct(), product)
         self.assertEqual(productcart.getAmount(), 2)
         self.assertEqual(productcart.getDiscount(), 20)
@@ -24,4 +24,4 @@ class TestProductCart(unittest.TestCase):
         self.assertEqual(productcart.getDiscount(), 10)
 
 
-unittest.main(verbosity=2)
+unittest.main()
