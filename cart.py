@@ -2,7 +2,7 @@ from product import Product
 from user import User
 from productcart import ProductCart  # переименование класса
 
-
+# TODO: add unittest.
 class Cart:
     def __init__(self, user):
         self.user = user

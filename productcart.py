@@ -1,6 +1,5 @@
 from product import Product
 
-# TODO: add unittests
 class ProductCart(Product):
 
     def __init__(self, product, amount, discount):
