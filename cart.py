@@ -3,6 +3,7 @@ from user import User
 from productcart import ProductCart  # переименование класса
 
 # TODO: add unittest.
+# TODO: please organize that as test_per_method (test_isUserAuthValid)
 class Cart:
     def __init__(self, user):
         self.user = user
@@ -63,6 +64,7 @@ class Cart:
             self.products[id].setAmount(self.products[id].getAmount() - amount)
         return self.products[id].getAmount()
 
+# TODO: move all the cases into the unittest and remove the section.
 if __name__ == "__main__":
     cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
     product1 = Product(1, 'notebook HP', 400)
