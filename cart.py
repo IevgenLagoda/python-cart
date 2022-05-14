@@ -8,11 +8,13 @@ class Cart:
         self.user = user
         self.products = {}
 
+    # TODO: should be able to call as:
+    # TODO: addProductToCart(nw Product(), 2, 10)
+    # TODO: addProductToCart(nw ProductCart())
     def addProductToCart(self, product):
-        # TODO: to check the instance of `product`. We can use `isinstance`.
-        # TODO: we have to support `Product` and `ProductCart` typex.
         if isinstance(product, ProductCart):
             id = product.getId()
+            # TODO: getAmount() ?
             if product.getAmount == 0:
                 return
             if id not in self.products:

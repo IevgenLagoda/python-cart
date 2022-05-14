@@ -28,7 +28,6 @@ class Order:
     def getOrderDicount(self):
         return self.cart.getTotalDicount()
 
-    # TODO: should use direct method from User (not from cart)
     def getDeliveryAddress(self):
         return self.user.getAddress()
 
@@ -39,16 +38,12 @@ class Order:
         return [self.user.getFullName(), order.getDeliveryAddress(),
                 self.user.getPhoneNumber(), self.user.getEmail()]
 
-    # TODO please check the name
     def getOrderProductsData(self):
        products_list = ['{}|{}|{}|{}'.format(product_values.getName(), product_values.getPrice(),
                                              product_values.getAmount(), product_values.getDiscount())
                         for product_values in self.cart.products.values()]
        return products_list
 
-    # TODO: exprotToFile(self, filename)
-    # TODO: - to create the list for export
-    # TODO: - to call another method with the list and filename for expprt
     def exportToFile(self, filename):
         file_write_list = order.getOrderUserData() + order.getOrderProductsData()
         file_write_list.append(str(order.getOrderAmount()))
