@@ -21,7 +21,7 @@ class TestProductCart(unittest.TestCase):
 
     def test_get_totalprice(self):
         total_price = 180
-        productcart = ProductCart (Product (1, 'test', 100), 2, 20)
+        productcart = ProductCart(Product (1, 'test', 100), 2, 20)
         # TODO: to use total_price as 2nd pram?
         self.assertEqual(productcart.getProductTotalPrice(), total_price)
 
@@ -34,7 +34,7 @@ class TestProductCart(unittest.TestCase):
         self.assertEqual(productcart.getAmount(), new_amount)
 
     def test_set_discount(self):
-        productcart = ProductCart (Product (1, 'test', 100), 2, 20)
+        productcart = ProductCart(Product(1, 'test', 100), 2, 20)
         new_discount = 10
         self.assertEqual(productcart.getDiscount(), 20)
         productcart.setDiscount(new_discount)
