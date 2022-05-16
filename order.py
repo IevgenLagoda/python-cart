@@ -18,7 +18,11 @@ class Order:
         if len(products) == 0:
             return
         for product in products:
-            self.cart.addProductToCart(product)
+            if isinstance(product, ProductCart):
+                self.cart.addProductToCart(product)
+            elif isinstance(product, (tuple, list)):
+                product, amount, discount = product
+                self.cart.addProductToCart(product, amount, discount)
         self.order_status = order_status
         self.user = user
 

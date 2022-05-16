@@ -68,6 +68,5 @@ class Cart:
             del self.products[id]
         else:
             self.products[id].setAmount(self.products[id].getAmount() - amount)
-        return self.products[id].getAmount()
 
 # TODO: move all the cases into the unittest and remove the section.

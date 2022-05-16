@@ -19,7 +19,7 @@ class TestProductCart(unittest.TestCase):
         productcart = ProductCart(Product(1, 'test', 100), 2, discount)
         self.assertEqual(productcart.getDiscount(), discount)
 
-    def test_get_totalprice(self):
+    def test_get_total_price(self):
         total_price = 180
         productcart = ProductCart(Product (1, 'test', 100), 2, 20)
         # TODO: to use total_price as 2nd pram?
