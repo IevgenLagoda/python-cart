@@ -49,10 +49,10 @@ class Order:
        return products_list
 
     def exportToFile(self, filename):
-        file_write_list = order.getOrderUserData() + order.getOrderProductsData()
-        file_write_list.append(str(order.getOrderAmount()))
-        file_write_list.append(str(order.getOrderDicount()))
-        order.writeListToFile(file_write_list, filename)
+        file_write_list = self.getOrderUserData() + self.getOrderProductsData()
+        file_write_list.append(str(self.getOrderAmount()))
+        file_write_list.append(str(self.getOrderDicount()))
+        self.writeListToFile(file_write_list, filename)
 
     def writeListToFile(self, write_list, filename):
         try:

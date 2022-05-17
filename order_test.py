@@ -1,4 +1,5 @@
 import unittest
+import filecmp
 from user import User
 from product import Product
 from productcart import ProductCart
@@ -53,6 +54,14 @@ class TestOrder(unittest.TestCase):
         order = Order(cartUser, [productcart1, productcart2], OrderStatus.new)
         products_data_list = ['test1|100|1|10', 'test2|200|2|20']
         self.assertEqual(order.getOrderProductsData(), products_data_list)
+
+    def test_write_order_to_file(self):
+        cartUser = User('Den', 'Vasin', '0503616655', 'Fesenko1', 'den2001@ukr.net', 'password')
+        productcart1 = ProductCart(Product(1, 'test1', 100), 1, 10)
+        productcart2 = ProductCart(Product(2, 'test2', 200), 2, 20)
+        order = Order(cartUser, [productcart1, productcart2], OrderStatus.new)
+        order.exportToFile('order.txt')
+        self.assertTrue(filecmp.cmp('order.txt', 'order_test.txt', shallow=False), True)
 
 
 unittest.main()
