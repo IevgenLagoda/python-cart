@@ -39,7 +39,7 @@ class Order:
         return self.order_status.value
 
     def getOrderUserData(self):
-        return [self.user.getFullName(), order.getDeliveryAddress(),
+        return [self.user.getFullName(), self.getDeliveryAddress(),
                 self.user.getPhoneNumber(), self.user.getEmail()]
 
     def getOrderProductsData(self):
