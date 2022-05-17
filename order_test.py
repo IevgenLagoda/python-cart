@@ -47,12 +47,12 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(order.getOrderUserData(), user_data_list)
 
     def test_get_order_products_data(self):
-        cartUser = User ('Den', 'Vasin', '0503616655', 'Fesenko1', 'den2001@ukr.net', 'password')
-        productcart1 = ProductCart (Product (1, 'test1', 100), 1, 10)
-        productcart2 = ProductCart (Product (2, 'test2', 200), 2, 20)
-        order = Order (cartUser, [productcart1, productcart2], OrderStatus.new)
+        cartUser = User('first_name', 'last_name', 'phone_number', 'address', 'email', 'password')
+        productcart1 = ProductCart(Product(1, 'test1', 100), 1, 10)
+        productcart2 = ProductCart(Product(2, 'test2', 200), 2, 20)
+        order = Order(cartUser, [productcart1, productcart2], OrderStatus.new)
         products_data_list = ['test1|100|1|10', 'test2|200|2|20']
-        self.assertEqual (order.getOrderProductsData(), products_data_list)
+        self.assertEqual(order.getOrderProductsData(), products_data_list)
 
 
 unittest.main()
