@@ -9,12 +9,8 @@ class Cart:
         self.user = user
         self.products = {}
 
-    # TODO: should be able to call as:
-    # TODO: addProductToCart(nw Product(), 2, 10)
-    # TODO: addProductToCart(nw ProductCart())
     def addProductToCart(self, product, amount=1, discount=0):
         if isinstance(product, ProductCart):
-            # TODO: getAmount() ?
             if product.getAmount() == 0:
                 return
             id = product.getId()
@@ -69,4 +65,3 @@ class Cart:
         else:
             self.products[id].setAmount(self.products[id].getAmount() - amount)
 
-# TODO: move all the cases into the unittest and remove the section.

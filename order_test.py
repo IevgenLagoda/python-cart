@@ -7,21 +7,26 @@ from order import Order, OrderStatus
 
 class TestOrder(unittest.TestCase):
     def test_get_order_amount(self):
+        # TODO: move common code into the setUp method.
         cartUser = User('first_name', 'last_name', 'phone_number', 'address', 'email', 'password')
         product1 = Product(1, 'test1', 100)
         product2 = Product(2, 'test2', 200)
         productcart = ProductCart(product1, 1, 10)
+        # TODO: how 470 is calculated.
         order_amount = 470
         order = Order(cartUser, [productcart, (product2, 2, 20)], OrderStatus.new)
         self.assertEqual(order.getOrderAmount(), order_amount)
+        # TODO: to check for an empty order.
 
     def test_get_order_discount(self):
         cartUser = User('first_name', 'last_name', 'phone_number', 'address', 'email', 'password')
         productcart1 = ProductCart(Product(1, 'test1', 100), 1, 10)
         productcart2 = ProductCart(Product(2, 'test2', 200), 2, 20)
+        # TODO: how it's calculated?
         order_discount = 30
         order = Order(cartUser, [productcart1, productcart2], OrderStatus.new)
         self.assertEqual(order.getOrderDicount(), order_discount)
+        # TODO: to check for an empty order.
 
     def test_get_delivery_address(self):
         cartUser = User('first_name', 'last_name', 'phone_number', 'Fesenko1', 'email', 'password')
@@ -40,6 +45,7 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(order.getDeliveryStatus(), delivery_status)
 
     def test_get_order_user_data(self):
+        # TODO: please use consts when possible.
         cartUser = User('Den', 'Vasin', '0503616655', 'Fesenko1', 'den2001@ukr.net', 'password')
         productcart1 = ProductCart(Product(1, 'test1', 100), 1, 10)
         productcart2 = ProductCart(Product(2, 'test2', 200), 2, 20)
@@ -62,6 +68,8 @@ class TestOrder(unittest.TestCase):
         order = Order(cartUser, [productcart1, productcart2], OrderStatus.new)
         order.exportToFile('order.txt')
         self.assertTrue(filecmp.cmp('order.txt', 'order_test.txt', shallow=False), True)
+
+        # TODO: writeListToFile should be tested as well for exaptions and empty list.
 
 
 unittest.main()

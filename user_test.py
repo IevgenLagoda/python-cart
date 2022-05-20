@@ -3,9 +3,11 @@ from user import User
 
 class TestUser(unittest.TestCase):
     def test_get_full_name(self):
+        # TODO: move common code into the setUp method.
         first_name = 'Den'
         last_name = 'Vasin'
         user = User(first_name, last_name, 'tel', 'address', 'email', 'password')
+        # TODO: to cteate expected value before check (full_name = ...).
         self.assertEqual(user.getFullName(), '{} {}'.format(first_name, last_name))
 
     def test_is_full_name_exists(self):
@@ -13,18 +15,22 @@ class TestUser(unittest.TestCase):
         last_name = 'Vasin'
         user = User(first_name, last_name, 'tel', 'address', 'email', 'password')
         self.assertTrue(user.isFullNameExists(), True)
+        # TODO: to check if it doens't exists.
 
     def test_is_address_exists(self):
         address = 'Fesenko1'
         user = User('first_name', 'last_name', 'tel', address, 'email', 'password')
         self.assertTrue(user.isAddressExists(), True)
+        # TODO: to check if it doens't exists.
 
+    # TODO: get/set methods for one attribite should be combined in one test.
     def test_get_address(self):
         address = 'Fesenko1'
         user = User('first_name', 'last_name', 'tel', address, 'email', 'password')
         self.assertEqual(user.getAddress(), address)
 
     def test_set_address(self):
+        # TODO: use old_address.
         user = User('first_name', 'last_name', 'tel', 'Fesenko1', 'email', 'password')
         new_address = 'Fesenko2'
         self.assertEqual (user.getAddress (), 'Fesenko1')
@@ -35,6 +41,7 @@ class TestUser(unittest.TestCase):
         phone_number = '0503616655'
         user = User('first_name', 'last_name', phone_number, 'address', 'email', 'password')
         self.assertTrue(user.isPhoneNumberExists(), True)
+        # TODO: to check if it doens't exists.
 
     def test_get_phone_number(self):
         phone_number = '0503616655'
@@ -44,11 +51,13 @@ class TestUser(unittest.TestCase):
     def test_is_user_data_exists(self):
         user = User('Den', 'Vasin', '0503616655', 'Fesenko2', 'email', 'password')
         self.assertEqual(user.isUserDataExists(), True)
+        # TODO: to check if it doens't exists.
 
     def test_is_email_exists(self):
         email = 'den2001@ukr.net'
         user = User('first_name', 'last_name', 'phone_number', 'address', email, 'password')
         self.assertTrue(user.isAddressExists(), True)
+        # TODO: to check if it doens't exists.
 
     def test_get_email(self):
         email = 'den2001@ukr.net'
@@ -59,6 +68,7 @@ class TestUser(unittest.TestCase):
         password = 'qwerty'
         user = User ('first_name', 'last_name', 'phone_number', 'address', 'email', password)
         self.assertTrue(user.isPasswordExists(), True)
+        # TODO: to check if it doens't exists.
 
     def test_get_password(self):
         password = 'qwerty'
@@ -70,6 +80,7 @@ class TestUser(unittest.TestCase):
         password = 'qwerty'
         user = User ('first_name', 'last_name', 'phone_number', 'address', 'den2001@ukr.net', 'qwerty')
         self.assertTrue(user.canBeLogged(email, password), True)
+        # TODO: to check if it's False.
 
 
 unittest.main()

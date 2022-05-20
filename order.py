@@ -63,6 +63,7 @@ class Order:
         except IOError:
             return 'File problem'
 
+# TODO: remove when moved to test.
 if __name__ == "__main__":
     cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
     product1 = Product(1, 'notebook HP', 400)
