@@ -2,8 +2,6 @@ from product import Product
 from user import User
 from productcart import ProductCart  # переименование класса
 
-# TODO: add unittest.
-# TODO: please organize that as test_per_method (test_isUserAuthValid)
 class Cart:
     def __init__(self, user):
         self.user = user
