@@ -62,4 +62,3 @@ class Cart:
             del self.products[id]
         else:
             self.products[id].setAmount(self.products[id].getAmount() - amount)
-

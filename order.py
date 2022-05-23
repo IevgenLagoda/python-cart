@@ -64,14 +64,3 @@ class Order:
             return 'File problem'
 
 # TODO: remove when moved to test.
-if __name__ == "__main__":
-    cartUser = User("Den", "Vasin", "0503616655", "Fesenko 1", "den2001@ukr.net", "qwerty")
-    product1 = Product(1, 'notebook HP', 400)
-    product2 = Product(2, 'notebook Acer', 350)
-    productcart1 = ProductCart(product1, 2, 10)
-
-    order = Order(cartUser, [productcart1, (product2, 4, 20)], OrderStatus.new)
-    print(order.getOrderAmount())
-    print(order.getDeliveryAddress())
-    print(order.getDeliveryStatus())
-    order.exportToFile('order.txt')
