@@ -1,5 +1,6 @@
 import unittest
 import filecmp
+import os.path
 from user import User
 from product import Product
 from productcart import ProductCart
@@ -11,7 +12,6 @@ class TestOrder(unittest.TestCase):
         self.productcart1 = ProductCart(Product(1, 'test1', 100), 1, 10)
         self.productcart2 = ProductCart(Product(2, 'test2', 200), 2, 20)
         self.order = Order(self.cartUser, [self.productcart1, self.productcart2], OrderStatus.new)
-        self.empty_amount = 0
 
     def test_get_order_amount(self):
         # TODO: move common code into the setUp method.
@@ -29,7 +29,8 @@ class TestOrder(unittest.TestCase):
         order = Order(self.cartUser, [productcart, (product2, 2, 20)], OrderStatus.new)
         self.assertEqual(order.getOrderAmount(), order_amount)
         order = Order(self.cartUser, [], OrderStatus.new)
-        self.assertEqual(order.getOrderAmount(), self.empty_amount)
+        empty_cart_amount = 0
+        self.assertEqual(order.getOrderAmount(), empty_cart_amount)
         # TODO: to check for an empty order.
 
     def test_get_order_discount(self):
@@ -39,7 +40,8 @@ class TestOrder(unittest.TestCase):
         order_discount = product1_discount + product2_discount
         self.assertEqual(self.order.getOrderDicount(), order_discount)
         order = Order(self.cartUser, [], OrderStatus.new)
-        self.assertEqual(order.getOrderAmount(), self.empty_amount)
+        empty_cart_discount = 0
+        self.assertEqual(order.getOrderDicount(), empty_cart_discount)
         # TODO: to check for an empty order.
 
     def test_get_delivery_address(self):
@@ -62,7 +64,16 @@ class TestOrder(unittest.TestCase):
     def test_write_order_to_file(self):
         self.order.exportToFile('order.txt')
         self.assertTrue(filecmp.cmp('order.txt', 'order_test.txt', shallow=False), True)
-        # TODO: writeListToFile should be tested as well for exaptions and empty list.
+        self.order.writeListToFile([], 'order.txt')
+        file_size_empty_list_write = 0
+        self.assertEqual(os.path.getsize('/Code/Project/Cart/order.txt'), file_size_empty_list_write)
 
+
+        # TODO: writeListToFile should be tested as well for exaptions and empty list.
+    def test_file_exp(self):
+        file = open('order.txt', 'w')
+        #with self.assertRaises(IOError):
+           #self.order.exportToFile('order.txt')
+        file.close()
 
 unittest.main()
