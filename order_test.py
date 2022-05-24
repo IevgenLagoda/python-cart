@@ -67,10 +67,7 @@ class TestOrder(unittest.TestCase):
         self.order.writeListToFile([], 'order.txt')
         self.assertTrue(filecmp.cmp('order.txt', 'order_test_empty_list.txt', shallow=False), True)
     # TODO: writeListToFile should be tested as well for exaptions and empty list.
-    def test_file_exp(self):
-        file = open("order.txt", "r")
-        self.order.exportToFile ('order.txt')
-        file.close()
+
 
 
 unittest.main()

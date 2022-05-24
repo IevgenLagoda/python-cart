@@ -53,6 +53,8 @@ class Cart:
     def getProductById(self, id):
         if self.isCartEmpty():
             return None
+        elif id not in self.products:
+            return None
         return self.products[id].getProduct()
 
     def removeProductById(self, id, amount=0):
