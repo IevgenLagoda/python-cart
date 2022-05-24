@@ -1,6 +1,6 @@
 import unittest
 import filecmp
-import os.path
+import os
 from user import User
 from product import Product
 from productcart import ProductCart
@@ -65,15 +65,12 @@ class TestOrder(unittest.TestCase):
         self.order.exportToFile('order.txt')
         self.assertTrue(filecmp.cmp('order.txt', 'order_test.txt', shallow=False), True)
         self.order.writeListToFile([], 'order.txt')
-        file_size_empty_list_write = 0
-        self.assertEqual(os.path.getsize('/Code/Project/Cart/order.txt'), file_size_empty_list_write)
-
-
-        # TODO: writeListToFile should be tested as well for exaptions and empty list.
+        self.assertTrue(filecmp.cmp('order.txt', 'order_test_empty_list.txt', shallow=False), True)
+    # TODO: writeListToFile should be tested as well for exaptions and empty list.
     def test_file_exp(self):
-        file = open('order.txt', 'w')
-        #with self.assertRaises(IOError):
-           #self.order.exportToFile('order.txt')
+        file = open("order.txt", "r")
+        self.order.exportToFile ('order.txt')
         file.close()
+
 
 unittest.main()

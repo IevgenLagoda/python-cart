@@ -5,39 +5,51 @@ from productcart import ProductCart
 from cart import Cart
 
 class TestCart(unittest.TestCase):
+    def setUp(self):
+        self.cart = Cart(User('test', 'test', 'test', 'test', 'den2001@ukr.net', 'qwerty'))
+        self.product1 = Product(1, 'test', 100)
+        self.product2 = Product(2, 'test', 200)
+
     def test_add_product_to_cart(self):
         # TODO: move general code into the setUp method. (this.cart)
-        cart = Cart(User('test', 'test', 'test', 'test', 'test', 'test'))
-        product1 = Product(1, 'test', 100)
-        product2 = Product(2, 'test', 200)
         amount = 2
         discount = 10
-        productcart = ProductCart(product2, amount, discount)
-        cart.addProductToCart(product1, amount, discount)
-        cart.addProductToCart(productcart)
-        self.assertEqual(cart.getProductById(1), product1)
-        self.assertEqual(cart.getProductById(2), product2)
+        productcart = ProductCart(self.product2, amount, discount)
+        self.cart.addProductToCart(self.product1, amount, discount)
+        self.cart.addProductToCart(productcart)
+        self.assertEqual(self.cart.getProductById(1), self.product1)
+        self.assertEqual(self.cart.getProductById(2), self.product2)
 
     def test_is_user_valid(self):
-        cart = Cart(User('test', 'test', 'test', 'test', 'test', 'test'))
-        self.assertTrue(cart.isUserValid(), True)
+        self.assertTrue(self.cart.isUserValid())
+        cart = Cart(User('test', 'test', 'test', 'test', '', ''))
+        self.assertFalse(cart.isUserValid())
         # TODO: check for isUserValue(), False
 
     def test_is_user_auth_valid(self):
         # TODO: can we use the same consts for login and password here as well?
-        cart = Cart(User('test', 'test', 'test', 'test', 'den2001@ukr.net', 'qwerty'))
         login = 'den2001@ukr.net'
         password = 'qwerty'
-        self.assertTrue(cart.isUserAuthValid(login, password), True)
+        self.assertTrue(self.cart.isUserAuthValid(login, password))
+        wrong_login = 'den2001@ukr.net'
+        self.assertFalse(self.cart.isUserAuthValid(wrong_login, password))
+        wrong_password = 'qwert'
+        self.assertFalse(self.cart.isUserAuthValid(login, wrong_password))
         # TODO: check isUserAuthValid, False
 
     def test_get_total_cart_price(self):
-        cart = Cart(User('test', 'test', 'test', 'test', 'test', 'test'))
         # TODO: would be good to calculate based on the price and other data.
-        total_price = 170
-        cart.addProductToCart(Product(1, 'test', 100), 1, 10)
-        cart.addProductToCart(Product(2, 'test', 100), 1, 20)
-        self.assertEqual(cart.getTotalCartPrice(), total_price)
+        product1_price = 100
+        product1_amount = 1
+        product1_discount = 10
+        product2_price = 200
+        product2_amount = 1
+        product2_discount = 20
+        total_price = (product1_price * product1_amount - product1_discount) + (
+                    product2_price * product2_amount - product2_discount)
+        self.cart.addProductToCart(self.product1, 1, 10)
+        self.cart.addProductToCart(self.product2, 1, 20)
+        self.assertEqual(self.cart.getTotalCartPrice(), total_price)
         # TODO: to check for the empty cart as well.
 
     def test_get_total_discount(self):
