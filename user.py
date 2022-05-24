@@ -59,7 +59,6 @@ class User:
 
     def isPasswordStrong(self):
         password = self.getPassword()
-        print(password)
         result = re.findall('(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])', password)
         print(result)
         if len(result) == 0:
