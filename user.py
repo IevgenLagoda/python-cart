@@ -1,5 +1,6 @@
-class User:
+import re
 
+class User:
     def __init__(self, first_name, last_name, tel, address,  email, password):
         self.first_name = first_name
         self.last_name = last_name
@@ -55,6 +56,15 @@ class User:
         if self.isPasswordExists() == False:
             return ''
         return self.password
+
+    def isPasswordStrong(self):
+        password = self.getPassword()
+        print(password)
+        result = re.findall('(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])', password)
+        print(result)
+        if len(result) == 0:
+            raise 'The password must have uppercase and lowercase Latin letters, one number and 6 characters long'
+        self.password = password
 
     def canBeLogged(self, email, password):
         return self.getEmail() == email and self.getPassword() == password  # замена if на return, перемещение метода из класса Cart в класс UserAuth
