@@ -66,4 +66,4 @@ class User:
         self.password = password
 
     def canBeLogged(self, email, password):
-        return self.getEmail() == email and self.getPassword() == password  # замена if на return, перемещение метода из класса Cart в класс UserAuth
+        return self.getEmail() == email and self.getPassword() == password
