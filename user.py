@@ -60,7 +60,6 @@ class User:
     def isPasswordStrong(self):
         password = self.getPassword()
         result = re.findall('(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])', password)
-        print(result)
         if len(result) == 0:
             raise 'The password must have uppercase and lowercase Latin letters, one number and 6 characters long'
         self.password = password
