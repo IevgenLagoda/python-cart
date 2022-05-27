@@ -5,9 +5,7 @@ with open('import.txt', 'r') as file:
 
         if re.findall(r'(?<=\s)([A-Z][a-z]{2,}\b)', line):
             fname, lname = re.findall(r'(?<=\s)([A-Z][a-z]{2,}\b)', line)
-
-            #print(fname, lname)
-        elif re.findall(r'(?<=\s)([A-Z][a-z]{3,})', line):
-            print(re.findall(r'(?<=\s)([A-Z][a-z]{3,})', line))
-            address = re.findall(r'\b[A-z][a-z][0-9]{3,}\b', line)
-            #print(address)
+        elif re.findall(r'(?<=\s)([A-Z][a-z0-9]{3,})', line):
+            address, = re.findall(r'(?<=\s)([A-Z][a-z0-9]{3,})', line)
+        elif re.findall(r"[a-zA-Z0-9]+@[a-zA-Z]+\.(com|net|org|edu)", line):
+            print(re.findall(r"([a-zA-Z0-9]+)(@)([a-zA-Z]+)(.)(com|net|org|edu)", line))
