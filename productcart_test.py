@@ -12,17 +12,18 @@ class TestProductCart(unittest.TestCase):
         self.assertEqual(productcart.getProduct(), product)
 
     def test_get_amount(self):
+        # TODO: amount should be const in setup and then we don't need new instance.
         amount = 2
         productcart = ProductCart(Product(1, 'test', 100), amount, 20)
         self.assertEqual(productcart.getAmount(), amount)
 
     def test_get_discount(self):
+        # TODO: discount should be const in setup and then we don't need new instance.
         discount = 20
         productcart = ProductCart(Product(1, 'test', 100), 2, discount)
         self.assertEqual(productcart.getDiscount(), discount)
 
     def test_get_total_price(self):
-        # TODO: how it's calculated?
         product_price = 100
         product_amount = 2
         product_dicount = 20
@@ -31,7 +32,7 @@ class TestProductCart(unittest.TestCase):
 
     def test_set_amount(self):
         new_amount = 3
-        # TODO: 2 should a const.
+        # TODO: 2 should be a const.
         self.assertEqual(self.productcart.getAmount(), 2)
         self.productcart.setAmount(new_amount)
         self.assertEqual(self.productcart.getAmount(), new_amount)

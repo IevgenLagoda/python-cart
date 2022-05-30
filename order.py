@@ -62,5 +62,3 @@ class Order:
                         filename.write('- {} \n'.format(line))
         except IOError:
             return 'File problem'
-
-# TODO: remove when moved to test.

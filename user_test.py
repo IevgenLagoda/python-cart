@@ -19,27 +19,25 @@ class TestUser(unittest.TestCase):
     def test_get_full_name(self):
         # TODO: move common code into the setUp method.
         user = User(self.first_name, self.last_name, 'tel', 'address', 'email', 'password')
-        # TODO: to cteate expected value before check (full_name = ...).
         full_name = '{} {}'.format(self.first_name, self.last_name)
         self.assertEqual(user.getFullName(), full_name)
 
     def test_is_full_name_exists(self):
         user = User(self.first_name, self.last_name, 'tel', 'address', 'email', 'password')
         self.assertTrue(user.isFullNameExists())
+        # TODO: instead of new isntance would be good to set emopty name and check.
+        # TODO: - maybe it will require a new method setName(first_name, last_name)
         user = User(self.empty_first_name, self.empty_last_name, 'tel', 'address', 'email', 'password')
         self.assertFalse(user.isFullNameExists())
-        # TODO: to check if it doens't exists.
 
     def test_is_address_exists(self):
         user = User('first_name', 'last_name', 'tel', self.address, 'email', 'password')
         self.assertTrue(user.isAddressExists())
         user = User('first_name', 'last_name', 'tel', self.empty_address, 'email', 'password')
         self.assertFalse(user.isAddressExists())
-        # TODO: to check if it doens't exists.
 
-    # TODO: get/set methods for one attribite should be combined in one test.
+    # TODO: it's fine to have name only with `set` - test_set_address()
     def test_get_set_address(self):
-        # TODO: use old_address.
         user = User('first_name', 'last_name', 'tel', self.address, 'email', 'password')
         self.assertEqual(user.getAddress(), self.address)
         new_address = 'Fesenko2'
@@ -51,7 +49,6 @@ class TestUser(unittest.TestCase):
         self.assertTrue(user.isPhoneNumberExists())
         user = User('first_name', 'last_name', self.empty_phone_number, 'address', 'email', 'password')
         self.assertFalse(user.isPhoneNumberExists())
-        # TODO: to check if it doens't exists.
 
     def test_get_phone_number(self):
         user = User('first_name', 'last_name', self.phone_number, 'address', 'email', 'password')
@@ -62,14 +59,12 @@ class TestUser(unittest.TestCase):
         self.assertTrue(user.isUserDataExists())
         user = User(self.empty_first_name, self.empty_last_name, self.phone_number, self.empty_address, 'email', 'password')
         self.assertFalse(user.isUserDataExists())
-        # TODO: to check if it doens't exists.
 
     def test_is_email_exists(self):
         user = User('first_name', 'last_name', 'phone_number', 'address', self.email, 'password')
         self.assertTrue(user.isEmailExists())
         user = User('first_name', 'last_name', 'phone_number', 'address', self.empty_email, 'password')
         self.assertFalse(user.isEmailExists())
-        # TODO: to check if it doens't exists.
 
     def test_get_email(self):
         user = User('first_name', 'last_name', 'phone_number', 'address', self.email, 'password')
@@ -80,7 +75,6 @@ class TestUser(unittest.TestCase):
         self.assertTrue(user.isPasswordExists())
         user = User('first_name', 'last_name', 'phone_number', 'address', 'email', self.empty_password)
         self.assertFalse(user.isPasswordExists())
-        # TODO: to check if it doens't exists.
 
     def test_get_password(self):
         user = User('first_name', 'last_name', 'phone_number', 'address', 'email', self.password)
@@ -90,7 +84,6 @@ class TestUser(unittest.TestCase):
         user = User('first_name', 'last_name', 'phone_number', 'address', self.email, self.password)
         self.assertTrue(user.canBeLogged(self.email, self.password))
         self.assertFalse(user.canBeLogged(self.empty_email, self.empty_password))
-        # TODO: to check if it's False.
 
-
+# TODO: add test for `isPasswordStrong``
 unittest.main()
