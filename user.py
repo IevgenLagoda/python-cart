@@ -67,12 +67,18 @@ class User:
             return ''
         return self.password
 
+    def setPassword(self, password):
+        self.password = password
+
     def isPasswordStrong(self):
         password = self.getPassword()
+        if len(password) < 6:
+            raise 'The password must have 6 characters length'
         # TODO: to simplify the regexp and check all the simp;le simple cases before RE.
-        result = re.findall('(?=.{6,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])', password)
+        result = re.findall('(?=.*\d)(?=.*[a-z])(?=.*[A-Z])', password)
         if len(result) == 0:
-            raise 'The password must have uppercase and lowercase Latin letters, one number and 6 characters length'
+            raise 'The password must have uppercase and lowercase Latin letters, one number'
+        return True
 
     def canBeLogged(self, email, password):
         return self.getEmail() == email and self.getPassword() == password

@@ -8,7 +8,7 @@ class TestUser(unittest.TestCase):
         self.address = 'Fesenko1'
         self.phone_number = '0503616655'
         self.email = 'den2001@ukr.net'
-        self.password = 'qwerty'
+        self.password = 'Qwerty5'
         self.empty_first_name = ''
         self.empty_last_name = ''
         self.empty_address = ''
@@ -16,8 +16,9 @@ class TestUser(unittest.TestCase):
         self.empty_email = ''
         self.empty_password = ''
         self.new_address = 'Fesenko2'
+        self.password_symbol_exception = 'qwerty5'
         self.full_name = '{} {}'.format (self.first_name, self.last_name)
-        self.user = User (self.first_name, self.last_name, self.phone_number, self.address, self.email, self.password)
+        self.user = User(self.first_name, self.last_name, self.phone_number, self.address, self.email, self.password)
 
     def test_get_full_name(self):
         # TODO: move common code into the setUp method.
@@ -53,7 +54,7 @@ class TestUser(unittest.TestCase):
         self.assertTrue(self.user.isUserDataExists())
         self.user.setFullName(self.empty_first_name, self.empty_last_name)
         self.user.setPhoneNumber(self.empty_phone_number)
-        self.user.setAddress (self.empty_address)
+        self.user.setAddress(self.empty_address)
         self.assertFalse(self.user.isUserDataExists())
 
     def test_is_email_exists(self):
@@ -66,11 +67,20 @@ class TestUser(unittest.TestCase):
 
     def test_is_password_exists(self):
        self.assertTrue(self.user.isPasswordExists())
-
+       self.user.setPassword(self.empty_password)
        self.assertFalse(self.user.isPasswordExists())
 
     def test_get_password(self):
         self.assertEqual(self.user.getPassword(), self.password)
+
+    def test_is_password_stong(self):
+        self.assertTrue(self.user.isPasswordStrong())
+        self.user.setPassword(self.empty_password)
+        with self.assertRaises(Exception):
+            self.assertTrue(self.user.isPasswordStrong())
+        self.user.setPassword(self.password_symbol_exception)
+        with self.assertRaises(Exception):
+            self.assertTrue(self.user.isPasswordStrong())
 
     def test_can_be_logged(self):
         self.assertTrue(self.user.canBeLogged(self.email, self.password))
