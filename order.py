@@ -61,4 +61,4 @@ class Order:
                     for line in write_list:
                         filename.write('- {} \n'.format(line))
         except IOError:
-            return 'File problem'
+            raise IOError
