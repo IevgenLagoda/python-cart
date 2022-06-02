@@ -1,3 +1,4 @@
+import re
 from enum import Enum, auto
 from cart import Cart
 from user import User
@@ -61,4 +62,33 @@ class Order:
                     for line in write_list:
                         filename.write('- {} \n'.format(line))
         except IOError:
+            raise IOError
+
+    def importFromFile(self):
+        try:
+            with open('import.txt', 'r') as file:
+                import_list = file.readlines ()
+                if len(import_list) == 0:
+                    raise 'File empty'
+                if re.findall(r'([A-Z][a-z]{2,})\s([A-Z][a-z]{2,})', import_list[0]):
+                    first_name, last_name = re.findall(r'[A-Z][a-z]{2,}', import_list[0])
+                if re.findall(r'[A-Z][a-z]{2,}\d+', import_list[1]):
+                    address, = re.findall (r'[A-Z][a-z]{2,}\d+', import_list[1])
+                if re.findall(r'(?<=\s)[+ -d]{10,17}\b', import_list[2]):
+                    phone, = re.findall(r'(?<=\s)[+ -d]{10,17}\b', import_list[2])
+                if re.findall(r'[A-z0-9._]+@[A-z]+\.[A-z]+.[A-z]+', import_list[3]):
+                    email, = re.findall(r'[A-z0-9._]+@[A-z]+\.[A-z]+.[A-z]+', import_list[3])
+                user = User(first_name, last_name, phone, address, email, '')
+                if len(import_list) < 5:
+                    raise 'products not found'
+                products_cart_list = []
+                product_id = 0
+                for str_number in range (4, len (import_list)):
+                    if re.findall(r'\b[A-z0-9\s.-]+\b', import_list[str_number]):
+                        product_id += 1
+                        name, price, amount, discount = re.findall(r'\b[A-z0-9\s.-]+\b', import_list[str_number])
+                        productcart = ProductCart(Product(product_id, name, price), amount, discount)
+                        products_cart_list.append(productcart)
+                return user, products_cart_list
+        except(IOError):
             raise IOError
