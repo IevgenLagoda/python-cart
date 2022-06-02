@@ -9,6 +9,7 @@ class OrderStatus(Enum):
     new = auto()
     order_processing = auto()
     delivery = auto()
+    received = auto()
 
     def __str__(self):
         return 'Order status: {0}'.format(self.value)
@@ -38,6 +39,15 @@ class Order:
 
     def getDeliveryStatus(self):
         return self.order_status.value
+
+    def setDeliveryStatus(self):
+        match self.getDeliveryStatus():
+            case OrderStatus.new.value:
+                self.order_status = OrderStatus.order_processing
+            case OrderStatus.order_processing.value:
+                self.order_status = OrderStatus.delivery
+            case OrderStatus.delivery.value:
+                self.order_status = OrderStatus.received
 
     def getOrderUserData(self):
         return [self.user.getFullName(), self.getDeliveryAddress(),
@@ -89,6 +99,6 @@ class Order:
                         name, price, amount, discount = re.findall(r'\b[A-z0-9\s.-]+\b', import_list[str_number])
                         productcart = ProductCart(Product(product_id, name, price), amount, discount)
                         products_cart_list.append(productcart)
-                return user, products_cart_list
+                return Order(user, products_cart_list, OrderStatus.new)  # or return user,  products_cart_list
         except(IOError):
             raise IOError

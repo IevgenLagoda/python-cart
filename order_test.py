@@ -21,6 +21,7 @@ class TestOrder(unittest.TestCase):
         self.empty_cart_discount = 0
         self.delivery_address = 'Fesenko1'
         self.delivery_status = 1
+        self.new_delivery_status = 2
         self.order_filename = 'order.txt'
         self.filename_test = 'order_test.txt'
         self.filename_empty_list = 'order_test_empty_list.txt'
@@ -55,9 +56,11 @@ class TestOrder(unittest.TestCase):
         # TODO: should be moved as const into the setup
         self.assertEqual(self.order.getDeliveryAddress(), self.delivery_address)
 
-    def test_get_delivery_status(self):
+    def test_set_delivery_status(self):
         # TODO: should be moved as const into the setup
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status)
+        self.order.setDeliveryStatus()
+        self.assertEqual(self.order.getDeliveryStatus(), self.new_delivery_status)
 
     def test_get_order_user_data(self):
         # TODO: please use consts when possible.
