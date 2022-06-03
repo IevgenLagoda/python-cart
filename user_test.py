@@ -21,13 +21,10 @@ class TestUser(unittest.TestCase):
         self.user = User(self.first_name, self.last_name, self.phone_number, self.address, self.email, self.password)
 
     def test_get_full_name(self):
-        # TODO: move common code into the setUp method.
         self.assertEqual(self.user.getFullName(), self.full_name)
 
     def test_is_full_name_exists(self):
         self.assertTrue(self.user.isFullNameExists())
-        # TODO: instead of new isntance would be good to set emopty name and check.
-        # TODO: - maybe it will require a new method setName(first_name, last_name)
         self.user.setFullName(self.empty_first_name, self.empty_last_name)
         self.assertFalse(self.user.isFullNameExists())
 
@@ -36,7 +33,6 @@ class TestUser(unittest.TestCase):
         self.user.setAddress(self.empty_address)
         self.assertFalse(self.user.isAddressExists())
 
-    # TODO: it's fine to have name only with `set` - test_set_address()
     def test_set_address(self):
         self.assertEqual(self.user.getAddress(), self.address)
         self.user.setAddress(self.new_address)
@@ -74,6 +70,11 @@ class TestUser(unittest.TestCase):
         self.assertEqual(self.user.getPassword(), self.password)
 
     def test_is_password_stong(self):
+        # TODO: we have to test
+        # TODO: - non-empty with less than 6 chars
+        # TODO: - only lower case
+        # TODO: - only upper case
+        # TODO: - only number
         self.assertTrue(self.user.isPasswordStrong())
         self.user.setPassword(self.empty_password)
         with self.assertRaises(Exception):
@@ -86,5 +87,4 @@ class TestUser(unittest.TestCase):
         self.assertTrue(self.user.canBeLogged(self.email, self.password))
         self.assertFalse(self.user.canBeLogged(self.empty_email, self.empty_password))
 
-# TODO: add test for `isPasswordStrong``
 unittest.main()

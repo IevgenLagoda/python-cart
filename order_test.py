@@ -53,30 +53,23 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(order.getOrderDicount(), self.empty_cart_discount)
 
     def test_get_delivery_address(self):
-        # TODO: should be moved as const into the setup
         self.assertEqual(self.order.getDeliveryAddress(), self.delivery_address)
 
     def test_set_delivery_status(self):
-        # TODO: should be moved as const into the setup
+        # TODO: to test all posible next statuses please!
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status)
         self.order.setDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.new_delivery_status)
 
     def test_get_order_user_data(self):
-        # TODO: please use consts when possible.
         user_data_list = self.getUserData(self.cartUser)
         self.assertEqual(self.order.getOrderUserData(), user_data_list)
 
     def test_get_order_products_data(self):
-        # TODO: please use consts when possible.
-        # TODO: it's fine to use additional method in tests. getProductData(product)
-        # TODO: it should be something like:
-        # TODO:  products_data_list = [getProductData(self.product1), getProductData(self.product2)]
         products_data_list = [self.getProductData(self.productcart1), self.getProductData(self.productcart2)]
         self.assertEqual(self.order.getOrderProductsData(), products_data_list)
 
     def test_write_order_to_file(self):
-        # TODO: to add const for the filename: order.txt
         self.order.exportToFile(self.order_filename)
         self.assertTrue(filecmp.cmp(self.order_filename, self.filename_test, shallow=False), True)
         self.order.writeListToFile([], self.order_filename)

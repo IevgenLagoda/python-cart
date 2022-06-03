@@ -9,7 +9,6 @@ class TestCart(unittest.TestCase):
         self.cart = Cart(User('test', 'test', 'test', 'test', 'den2001@ukr.net', 'qwerty'))
         self.product1 = Product(1, 'test', 100)
         self.product2 = Product(2, 'test', 200)
-        # TODO: may we have productId1 and productId2 as consts?
         self.productId1 = 1
         self.productId2 = 2
         self.product1_amount = 1
@@ -71,13 +70,11 @@ class TestCart(unittest.TestCase):
         self.assertTrue(self.cart.isCartEmpty())
 
     def test_get_product_by_id(self):
-        # TODO: please use const for the main value.
         self.assertEqual(self.cart.getProductById(self.productId1), self.product1)
         self.assertIsNone(self.cart.getProductById(self.wrong_product_id))
 
     def test_remove_product_by_id(self):
         self.assertEqual(self.cart.products[self.productId2].getAmount(), self.productId2)
-        # TODO: let's rename it into something like `product_number``
         product_number = 1
         self.cart.removeProductById(self.productId2, product_number)
         self.assertEqual(self.cart.products[self.productId2].getAmount(), product_number)

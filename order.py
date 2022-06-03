@@ -40,6 +40,7 @@ class Order:
     def getDeliveryStatus(self):
         return self.order_status.value
 
+    # TODO: setNextStatus(self)
     def setDeliveryStatus(self):
         match self.getDeliveryStatus():
             case OrderStatus.new.value:
@@ -74,6 +75,7 @@ class Order:
         except IOError:
             raise IOError
 
+    # TODO: filename should be a pramater.
     def importFromFile(self):
         try:
             with open('import.txt', 'r') as file:

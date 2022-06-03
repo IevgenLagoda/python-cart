@@ -74,7 +74,6 @@ class User:
         password = self.getPassword()
         if len(password) < 6:
             raise 'The password must have 6 characters length'
-        # TODO: to simplify the regexp and check all the simp;le simple cases before RE.
         result = re.findall('(?=.*\d)(?=.*[a-z])(?=.*[A-Z])', password)
         if len(result) == 0:
             raise 'The password must have uppercase and lowercase Latin letters, one number'
