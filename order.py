@@ -82,7 +82,7 @@ class Order:
     def importFromFile(self):
         try:
             with open('import.txt', 'r') as file:
-                import_list = file.readlines ()
+                import_list = file.readlines()
                 if len(import_list) == 0:
                     raise 'File empty'
                 # TODO: check if we have less than 5 lines
@@ -116,5 +116,6 @@ class Order:
                         productcart = ProductCart(Product(product_id, name, price), amount, discount)
                         products_cart_list.append(productcart)
                 return Order(user, products_cart_list, OrderStatus.new)  # or return user,  products_cart_list
+
         except(IOError):
             raise IOError
