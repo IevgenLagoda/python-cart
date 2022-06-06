@@ -20,8 +20,10 @@ class TestOrder(unittest.TestCase):
         self.empty_cart_amount = 0
         self.empty_cart_discount = 0
         self.delivery_address = 'Fesenko1'
-        self.delivery_status = 1
-        self.new_delivery_status = 2
+        self.delivery_status_new = 1
+        self.delivery_status_order_processing = 2
+        self.delivery_status_delivery = 3
+        self.delivery_status_received = 4
         self.order_filename = 'order.txt'
         self.filename_test = 'order_test.txt'
         self.filename_empty_list = 'order_test_empty_list.txt'
@@ -57,9 +59,16 @@ class TestOrder(unittest.TestCase):
 
     def test_set_delivery_status(self):
         # TODO: to test all posible next statuses please!
-        self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status)
-        self.order.setDeliveryStatus()
-        self.assertEqual(self.order.getDeliveryStatus(), self.new_delivery_status)
+        self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_new)
+        self.order.setNextStatus()
+        self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_order_processing)
+        self.order.setNextStatus()
+        self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_delivery)
+        self.order.setNextStatus()
+        self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_received)
+        self.order.setNextStatus()
+        self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_received)
+
 
     def test_get_order_user_data(self):
         user_data_list = self.getUserData(self.cartUser)
