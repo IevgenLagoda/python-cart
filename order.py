@@ -77,7 +77,7 @@ class Order:
 
     # TODO: filename should be a paramater.
     # TODO: if you return Order then name should be getOrderFromFile()
-    # TODO: this method should ne static.https://www.journaldev.com/18722/python-static-method#:~:text=What%20is%20a%20static%20method,an%20object%20for%20that%20class.
+    # TODO: getOrderFromFile should be static.https://www.journaldev.com/18722/python-static-method#:~:text=What%20is%20a%20static%20method,an%20object%20for%20that%20class.
     # TODO: importFromFile should fill the Order in place.
     def importFromFile(self):
         try:
