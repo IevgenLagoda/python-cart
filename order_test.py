@@ -26,6 +26,8 @@ class TestOrder(unittest.TestCase):
         self.delivery_status_received = 4
         self.order_filename = 'order.txt'
         self.filename_test = 'order_test.txt'
+        self.import_filename = 'import.txt'
+        self.export_filename = 'export.txt'
         self.filename_empty_list = 'order_test_empty_list.txt'
 
     def getProductData(self, product):
@@ -60,13 +62,13 @@ class TestOrder(unittest.TestCase):
     def test_set_delivery_status(self):
         # TODO: to test all posible next statuses please!
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_new)
-        self.order.setNextStatus()
+        self.order.setDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_order_processing)
-        self.order.setNextStatus()
+        self.order.setDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_delivery)
-        self.order.setNextStatus()
+        self.order.setDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_received)
-        self.order.setNextStatus()
+        self.order.setDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_received)
 
 
@@ -85,5 +87,13 @@ class TestOrder(unittest.TestCase):
         self.assertTrue(filecmp.cmp(self.order_filename, self.filename_empty_list, shallow=False), True)
         with self.assertRaises(IOError):
             self.order.exportToFile('')
+
+    def test_get_order_from_file(self):
+        test_order = self.order.getOrderFromFile(self.import_filename)
+        test_order.exportToFile(self.export_filename)
+        self.assertTrue(filecmp.cmp(self.import_filename, self.export_filename, shallow=False), True)
+        #with self.assertRaises(Exception):
+        #    self.order.getOrderFromFile(self.filename_empty_list)
+
 
 unittest.main()
