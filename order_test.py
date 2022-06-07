@@ -24,11 +24,14 @@ class TestOrder(unittest.TestCase):
         self.delivery_status_order_processing = 2
         self.delivery_status_delivery = 3
         self.delivery_status_received = 4
+        self.empty_products_list = []
         self.order_filename = 'order.txt'
-        self.filename_test = 'order_test.txt'
-        self.import_filename = 'import.txt'
-        self.export_filename = 'export.txt'
-        self.filename_empty_list = 'order_test_empty_list.txt'
+        self.order_filename_etalon = 'order_test.txt'
+        self.filename_empty_list_test = 'order_test_empty_list.txt'
+        self.filename_empty_products_data = 'empty_products_data.txt'
+        self.filename_wrong_user_data = 'wrong_user_data.txt'
+        self.filename_new_data_order = 'new_data_order.txt'
+        self.filename_data_order_after_test = 'data_order_after_test.txt'
 
     def getProductData(self, product):
         product_data = '{}|{}|{}|{}'.format(product.getName(), product.getPrice(),
@@ -82,18 +85,41 @@ class TestOrder(unittest.TestCase):
 
     def test_write_order_to_file(self):
         self.order.exportToFile(self.order_filename)
-        self.assertTrue(filecmp.cmp(self.order_filename, self.filename_test, shallow=False), True)
-        self.order.writeListToFile([], self.order_filename)
-        self.assertTrue(filecmp.cmp(self.order_filename, self.filename_empty_list, shallow=False), True)
+        self.assertTrue(filecmp.cmp(self.order_filename, self.order_filename_etalon, shallow=False), True)
+        self.order.writeListToFile(self.empty_products_list, self.order_filename)
+        self.assertTrue(filecmp.cmp(self.order_filename, self.filename_empty_list_test, shallow=False), True)
         with self.assertRaises(IOError):
             self.order.exportToFile('')
 
     def test_get_order_from_file(self):
-        test_order = self.order.getOrderFromFile(self.import_filename)
-        test_order.exportToFile(self.export_filename)
-        self.assertTrue(filecmp.cmp(self.import_filename, self.export_filename, shallow=False), True)
-        #with self.assertRaises(Exception):
-        #    self.order.getOrderFromFile(self.filename_empty_list)
+        test_order = self.order.getOrderFromFile(self.order_filename_etalon)
+        test_order.exportToFile(self.order_filename)
+        self.assertTrue(filecmp.cmp(self.order_filename_etalon, self.order_filename, shallow=False), True)
+        test_order = self.order.getOrderFromFile(self.filename_empty_products_data)
+        self.assertEqual(self.empty_products_list, test_order.getOrderProductsData())
+        test_order = self.order.getOrderFromFile(self.filename_wrong_user_data)
+        self.assertFalse(test_order.user.isFullNameExists())
+        self.assertFalse(test_order.user.isPhoneNumberExists())
+        self.assertFalse(test_order.user.isAddressExists())
+        self.assertFalse(test_order.user.isEmailExists())
+        with self.assertRaises(Exception):
+            self.order.getOrderFromFile(self.filename_empty_list_test)
+        with self.assertRaises(IOError):
+            self.order.getOrderFromFile('')
+
+    def test_get_data_from_file(self):
+        self.order.getDataFromFile(self.filename_new_data_order)
+        self.order.exportToFile(self.order_filename)
+        self.assertTrue(filecmp.cmp(self.filename_data_order_after_test, self.order_filename, shallow=False), True)
+        self.order.getDataFromFile(self.filename_wrong_user_data)
+        self.assertFalse(self.order.user.isFullNameExists())
+        self.assertFalse(self.order.user.isPhoneNumberExists())
+        self.assertFalse(self.order.user.isAddressExists())
+        self.assertFalse(self.order.user.isEmailExists())
+        with self.assertRaises(Exception):
+            self.order.getDataFromFile(self.filename_empty_list_test)
+        with self.assertRaises(IOError):
+            self.order.getDataFromFile('')
 
 
 unittest.main()

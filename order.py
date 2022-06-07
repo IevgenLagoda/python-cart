@@ -17,6 +17,8 @@ class OrderStatus(Enum):
 class Order:
     def __init__(self, user, products, order_status):
         self.cart = Cart(user)
+        self.user = user
+        self.order_status = order_status
         if len(products) == 0:
             return
         for product in products:
@@ -25,8 +27,6 @@ class Order:
             elif isinstance(product, (tuple, list)):
                 product, amount, discount = product
                 self.cart.addProductToCart(product, amount, discount)
-        self.order_status = order_status
-        self.user = user
 
     def getOrderAmount(self):
         return self.cart.getTotalCartPrice()
@@ -71,7 +71,7 @@ class Order:
             with open(filename, 'w') as filename:
                 if isinstance(write_list, list):
                     for line in write_list:
-                        filename.write('- {} \n'.format(line))
+                        filename.write('- {}\n'.format(line))
         except IOError:
             raise IOError
 
@@ -89,20 +89,27 @@ class Order:
         # TODO: else? set the empty values ('')
         if re.findall(r'([A-Z][a-z]{2,})\s([A-Z][a-z]{2,})', import_list[0]):
             first_name, last_name = re.findall(r'[A-Z][a-z]{2,}', import_list[0])
+        else:
+            first_name, last_name = '', ''
         # TODO: should accept addresses like:
         # TODO: 'Bandery 15, kv 4', 'Heroiv 12/2', 'Zelenskogo 4'
         if re.findall(r'[A-Z][a-z]{2,}.+\d+', import_list[1]):
             address, = re.findall(r'[A-Z][a-z]{2,}.+\d+', import_list[1])
+        else:
+            address = ''
         # TODO: should accept more formats:
         # TODO: '+19492471682', '7-12-15', '+380667674093', '7421524'
         if re.findall(r'(?<=\s)[+ -d]{10,17}\b', import_list[2]):
             phone, = re.findall(r'(?<=\s)[+ -d]{10,17}\b', import_list[2])
+        else:
+            phone = ''
         # TODO: should accept more formats:
         # TODO: 'i@ua.fm', 'me.address.here@site.mobi', 'dory_mory@molly-dolly.co.uk'
         if re.findall(r'[A-z._]+[\d]*@[A-z-]+\.[A-z]+.[A-z]*', import_list[3]):
             email, = re.findall(r'[A-z._]+[\d]*@[A-z-]+\.[A-z]+.[A-z]*', import_list[3])
-            print(email)
-            user = User(first_name, last_name, phone, address, email, '')
+        else:
+            email = ''
+        user = User(first_name, last_name, phone, address, email, '')
         # TODO: we should allow order w\o products.
         products_cart_list = []
         if len(import_list) < 5:
@@ -115,30 +122,45 @@ class Order:
             price, amount, discount = int(price), int(amount), int(discount)
             productcart = ProductCart(Product(str_number, name, price), amount, discount)
             products_cart_list.append(productcart)
-        return Order(user, products_cart_list, OrderStatus.new)  # or return user,  products_cart_list
+        return Order(user, products_cart_list, OrderStatus.new)
 
-    def getDataFromFile(filename):
+    def getDataFromFile(self, filename):
         import_list = Order.readDataFromFile(filename)
         if len(import_list) == 0:
            raise 'File empty'
         if re.findall(r'([A-Z][a-z]{2,})\s([A-Z][a-z]{2,})', import_list[0]):
             first_name, last_name = re.findall(r'[A-Z][a-z]{2,}', import_list[0])
+        else:
+            first_name, last_name = '', ''
         if re.findall(r'[A-Z][a-z]{2,}.+\d+', import_list[1]):
             address, = re.findall(r'[A-Z][a-z]{2,}.+\d+', import_list[1])
+        else:
+            address = ''
         if re.findall(r'(?<=\s)[+ -d]{10,17}\b', import_list[2]):
             phone, = re.findall(r'(?<=\s)[+ -d]{10,17}\b', import_list[2])
+        else:
+            phone = ''
         if re.findall(r'[A-z._]+[\d]*@[A-z-]+\.[A-z]+.[A-z]*', import_list[3]):
             email, = re.findall(r'[A-z._]+[\d]*@[A-z-]+\.[A-z]+.[A-z]*', import_list[3])
-            user = User(first_name, last_name, phone, address, email, '')
+        else:
+            email = ''
+        user = User(first_name, last_name, phone, address, email, '')
         products_cart_list = []
         if len(import_list) < 5:
-            return products_cart_list
+            self.user = user
         for str_number in range(4, len(import_list)-2):
             product_data = import_list[str_number].strip('- \n')
             name, price, amount, discount = product_data.split('|')
-            price, amount, discount = float (price), int (amount), float (discount)
+            price, amount, discount = int(price), int(amount), int(discount)
             productcart = ProductCart(Product(str_number, name, price), amount, discount)
             products_cart_list.append(productcart)
+        self.user = user
+        for product in products_cart_list:
+            if isinstance(product, ProductCart):
+                self.cart.addProductToCart(product)
+            elif isinstance(product, (tuple, list)):
+                product, amount, discount = product
+                self.cart.addProductToCart(product, amount, discount)
 
     @staticmethod
     def readDataFromFile (filename):
@@ -148,5 +170,3 @@ class Order:
             return import_list
         except(IOError):
             raise IOError
-print(Order.getOrderFromFile('import.txt'))
-
