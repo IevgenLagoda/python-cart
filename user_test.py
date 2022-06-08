@@ -16,7 +16,11 @@ class TestUser(unittest.TestCase):
         self.empty_email = ''
         self.empty_password = ''
         self.new_address = 'Fesenko2'
-        self.password_symbol_exception = 'qwerty5'
+        self.password_lower_symbols = 'qwerty5'
+        self.password_upper_symbols = 'QWERTY5'
+        self.password_only_numbers = '555555'
+        self.password_without_number = 'Qwertyy'
+        self.password_less_6_chars = 'Qwet6'
         self.full_name = '{} {}'.format (self.first_name, self.last_name)
         self.user = User(self.first_name, self.last_name, self.phone_number, self.address, self.email, self.password)
 
@@ -79,7 +83,19 @@ class TestUser(unittest.TestCase):
         self.user.setPassword(self.empty_password)
         with self.assertRaises(Exception):
             self.assertTrue(self.user.isPasswordStrong())
-        self.user.setPassword(self.password_symbol_exception)
+        self.user.setPassword(self.password_lower_symbols)
+        with self.assertRaises(Exception):
+            self.assertTrue(self.user.isPasswordStrong())
+        self.user.setPassword(self.password_upper_symbols)
+        with self.assertRaises(Exception):
+            self.assertTrue(self.user.isPasswordStrong())
+        self.user.setPassword(self.password_only_numbers)
+        with self.assertRaises(Exception):
+            self.assertTrue(self.user.isPasswordStrong())
+        self.user.setPassword(self.password_without_number)
+        with self.assertRaises(Exception):
+            self.assertTrue(self.user.isPasswordStrong())
+        self.user.setPassword(self.password_less_6_chars)
         with self.assertRaises(Exception):
             self.assertTrue(self.user.isPasswordStrong())
 

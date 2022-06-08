@@ -1,5 +1,7 @@
 import unittest
 import filecmp
+
+import order
 from user import User
 from product import Product
 from productcart import ProductCart
@@ -25,6 +27,7 @@ class TestOrder(unittest.TestCase):
         self.delivery_status_delivery = 3
         self.delivery_status_received = 4
         self.empty_products_list = []
+        self.new_total_price = 940
         self.order_filename = 'order.txt'
         self.order_filename_etalon = 'order_test.txt'
         self.filename_empty_list_test = 'order_test_empty_list.txt'
@@ -111,11 +114,14 @@ class TestOrder(unittest.TestCase):
         self.order.getDataFromFile(self.filename_new_data_order)
         self.order.exportToFile(self.order_filename)
         self.assertTrue(filecmp.cmp(self.filename_data_order_after_test, self.order_filename, shallow=False), True)
+        self.order.getDataFromFile(self.filename_empty_products_data)
+        self.assertEqual(self.order.cart.getTotalCartPrice(), self.new_total_price)
         self.order.getDataFromFile(self.filename_wrong_user_data)
         self.assertFalse(self.order.user.isFullNameExists())
         self.assertFalse(self.order.user.isPhoneNumberExists())
         self.assertFalse(self.order.user.isAddressExists())
         self.assertFalse(self.order.user.isEmailExists())
+
         with self.assertRaises(Exception):
             self.order.getDataFromFile(self.filename_empty_list_test)
         with self.assertRaises(IOError):
