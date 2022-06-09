@@ -74,11 +74,6 @@ class TestUser(unittest.TestCase):
         self.assertEqual(self.user.getPassword(), self.password)
 
     def test_is_password_stong(self):
-        # TODO: we have to test
-        # TODO: - non-empty with less than 6 chars
-        # TODO: - only lower case
-        # TODO: - only upper case
-        # TODO: - only number
         self.assertTrue(self.user.isPasswordStrong())
         self.user.setPassword(self.empty_password)
         with self.assertRaises(Exception):
