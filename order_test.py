@@ -125,5 +125,7 @@ class TestOrder(unittest.TestCase):
         with self.assertRaises(IOError):
             self.order.getDataFromFile('')
 
+    # TODO: and the final test test_integration(self)
+    # TODO: it should read order from file, write to another file and compare both.
 
 unittest.main()
