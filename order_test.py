@@ -66,7 +66,6 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(self.order.getDeliveryAddress(), self.delivery_address)
 
     def test_set_delivery_status(self):
-        # TODO: to test all posible next statuses please!
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_new)
         self.order.setDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_order_processing)
@@ -76,7 +75,6 @@ class TestOrder(unittest.TestCase):
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_received)
         self.order.setDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_received)
-
 
     def test_get_order_user_data(self):
         user_data_list = self.getUserData(self.cartUser)
