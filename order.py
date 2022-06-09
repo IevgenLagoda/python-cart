@@ -72,11 +72,10 @@ class Order:
                 if isinstance(write_list, list):
                     for line in write_list:
                         filename.write('- {}\n'.format(line))
-        # joke of the day ;) it will throw the Error even without this code ;)
         except IOError:
+            # TODO: raise IOError("Writing error")
             raise IOError
 
-    # TODO: importFromFile should fill the Order in place.
     @staticmethod
     def getOrderFromFile(filename):
         import_list = Order.readDataFromFile(filename)
@@ -109,7 +108,9 @@ class Order:
             productcart = ProductCart(Product(str_number, name, price), amount, discount)
             products_cart_list.append(productcart)
         return Order(user, products_cart_list, OrderStatus.new)
-
+    
+    # TODO: can we avoid code duplication with getOrderFromFile?
+    # TODO: importFromFile should fill the Order in place.
     def getDataFromFile(self, filename):
         import_list = Order.readDataFromFile(filename)
         if len(import_list) == 0:
@@ -154,6 +155,6 @@ class Order:
             with open(filename, 'r') as file:
                 import_list = file.readlines()
             return import_list
-        # joke of the day ;) it will throw the Error even without this code ;)
         except(IOError):
+            # TODO: raise IOError("Writing error")
             raise IOError
