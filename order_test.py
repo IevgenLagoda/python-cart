@@ -35,6 +35,7 @@ class TestOrder(unittest.TestCase):
         self.filename_wrong_user_data = 'wrong_user_data.txt'
         self.filename_new_data_order = 'new_data_order.txt'
         self.filename_data_order_after_test = 'data_order_after_test.txt'
+        self.filename_test_write_order = 'test_write_order.txt'
 
     def getProductData(self, product):
         product_data = '{}|{}|{}|{}'.format(product.getName(), product.getPrice(),
@@ -89,43 +90,51 @@ class TestOrder(unittest.TestCase):
         self.assertTrue(filecmp.cmp(self.order_filename, self.order_filename_etalon, shallow=False), True)
         self.order.writeListToFile(self.empty_products_list, self.order_filename)
         self.assertTrue(filecmp.cmp(self.order_filename, self.filename_empty_list_test, shallow=False), True)
-        with self.assertRaises(IOError):
+        with self.assertRaisesRegex(IOError, 'Writing file error'):
             self.order.exportToFile('')
 
     def test_get_order_from_file(self):
-        test_order = self.order.getOrderFromFile(self.order_filename_etalon)
+        test_order = self.order.createNewOrder(self.order_filename_etalon)
         test_order.exportToFile(self.order_filename)
         self.assertTrue(filecmp.cmp(self.order_filename_etalon, self.order_filename, shallow=False), True)
-        test_order = self.order.getOrderFromFile(self.filename_empty_products_data)
+        test_order = self.order.createNewOrder(self.filename_empty_products_data)
         self.assertEqual(self.empty_products_list, test_order.getOrderProductsData())
-        test_order = self.order.getOrderFromFile(self.filename_wrong_user_data)
+        test_order = self.order.createNewOrder(self.filename_wrong_user_data)
         self.assertFalse(test_order.user.isFullNameExists())
         self.assertFalse(test_order.user.isPhoneNumberExists())
         self.assertFalse(test_order.user.isAddressExists())
         self.assertFalse(test_order.user.isEmailExists())
         with self.assertRaises(Exception):
-            self.order.getOrderFromFile(self.filename_empty_list_test)
-        with self.assertRaises(IOError):
-            self.order.getOrderFromFile('')
+            self.order.createNewOrder(self.filename_empty_list_test)
+        with self.assertRaisesRegex(IOError, 'Reading file error'):
+            test_order.createNewOrder('')
 
-    def test_get_data_from_file(self):
-        self.order.getDataFromFile(self.filename_new_data_order)
+    def test_update_current_order_from_file(self):
+        self.order.updateCurrentOrder(self.filename_new_data_order)
         self.order.exportToFile(self.order_filename)
         self.assertTrue(filecmp.cmp(self.filename_data_order_after_test, self.order_filename, shallow=False), True)
-        self.order.getDataFromFile(self.filename_empty_products_data)
+        self.order.updateCurrentOrder(self.filename_empty_products_data)
         self.assertEqual(self.order.cart.getTotalCartPrice(), self.new_total_price)
-        self.order.getDataFromFile(self.filename_wrong_user_data)
+        self.order.updateCurrentOrder(self.filename_wrong_user_data)
         self.assertFalse(self.order.user.isFullNameExists())
         self.assertFalse(self.order.user.isPhoneNumberExists())
         self.assertFalse(self.order.user.isAddressExists())
         self.assertFalse(self.order.user.isEmailExists())
-
         with self.assertRaises(Exception):
-            self.order.getDataFromFile(self.filename_empty_list_test)
-        with self.assertRaises(IOError):
-            self.order.getDataFromFile('')
+            self.order.updateCurrentOrder(self.filename_empty_list_test)
+        with self.assertRaisesRegex(IOError, 'Reading file error'):
+            self.order.updateCurrentOrder('')
 
     # TODO: and the final test test_integration(self)
     # TODO: it should read order from file, write to another file and compare both.
+    def test_integration(self):
+        test_order = self.order.createNewOrder(self.order_filename_etalon)
+        test_order.exportToFile (self.filename_test_write_order)
+        self.assertEqual(filecmp.cmp(self.order_filename_etalon, self.filename_test_write_order, shallow=False), True)
+        with self.assertRaisesRegex(IOError, 'Reading file error'):
+            test_order.createNewOrder('')
+        with self.assertRaisesRegex(IOError, 'Writing file error'):
+            self.order.exportToFile('')
+
 
 unittest.main()
