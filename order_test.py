@@ -129,7 +129,7 @@ class TestOrder(unittest.TestCase):
     # TODO: it should read order from file, write to another file and compare both.
     def test_integration(self):
         test_order = self.order.createNewOrder(self.order_filename_etalon)
-        test_order.exportToFile (self.filename_test_write_order)
+        test_order.exportToFile(self.filename_test_write_order)
         self.assertEqual(filecmp.cmp(self.order_filename_etalon, self.filename_test_write_order, shallow=False), True)
         with self.assertRaisesRegex(IOError, 'Reading file error'):
             test_order.createNewOrder('')

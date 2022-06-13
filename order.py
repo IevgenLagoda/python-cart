@@ -122,7 +122,7 @@ class Order:
             return user, products_cart_list
         for str_number in range(4, len (import_list) - 2):
             product_data = import_list[str_number].strip('- \n')
-            name, price, amount, discount = product_data.split ('|')
+            name, price, amount, discount = product_data.split('|')
             price, amount, discount = int(price), int(amount), int(discount)
             productcart = ProductCart(Product (str_number, name, price), amount, discount)
             products_cart_list.append(productcart)
