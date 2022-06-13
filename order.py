@@ -120,7 +120,7 @@ class Order:
         products_cart_list = []
         if len(import_list) < 5:
             return user, products_cart_list
-        for str_number in range(4, len (import_list) - 2):
+        for str_number in range(4, len(import_list) - 2):
             product_data = import_list[str_number].strip('- \n')
             name, price, amount, discount = product_data.split('|')
             price, amount, discount = int(price), int(amount), int(discount)
