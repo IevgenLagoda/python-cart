@@ -41,7 +41,7 @@ class Order:
         return self.order_status.value
 
     # TODO: setNextDeliveryStatus(self)
-    def setDeliveryStatus(self):
+    def setNextDeliveryStatus(self):
         match self.getDeliveryStatus():
             case OrderStatus.new.value:
                 self.order_status = OrderStatus.order_processing
