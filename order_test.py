@@ -68,13 +68,13 @@ class TestOrder(unittest.TestCase):
 
     def test_set_delivery_status(self):
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_new)
-        self.order.setDeliveryStatus()
+        self.order.setNextDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_order_processing)
-        self.order.setDeliveryStatus()
+        self.order.setNextDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_delivery)
-        self.order.setDeliveryStatus()
+        self.order.setNextDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_received)
-        self.order.setDeliveryStatus()
+        self.order.setNextDeliveryStatus()
         self.assertEqual(self.order.getDeliveryStatus(), self.delivery_status_received)
 
     def test_get_order_user_data(self):
