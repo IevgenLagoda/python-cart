@@ -40,7 +40,6 @@ class Order:
     def getDeliveryStatus(self):
         return self.order_status.value
 
-    # TODO: setNextDeliveryStatus(self)
     def setNextDeliveryStatus(self):
         match self.getDeliveryStatus():
             case OrderStatus.new.value:
@@ -73,7 +72,6 @@ class Order:
                     for line in write_list:
                         filename.write('- {}\n'.format(line))
         except IOError:
-            # TODO: raise IOError("Writing error")
             raise IOError("Writing file error")
 
     @staticmethod
@@ -81,8 +79,6 @@ class Order:
         user, products_list = Order.importFromFile(filename)
         return Order(user, products_list, OrderStatus.new)
     
-    # TODO: can we avoid code duplication with getOrderFromFile?
-    # TODO: importFromFile should fill the Order in place.
     def updateCurrentOrder(self, filename):
         user, products_list = Order.importFromFile(filename)
         if len(products_list) < 5:
@@ -135,5 +131,4 @@ class Order:
                 import_list = file.readlines()
             return import_list
         except(IOError):
-            # TODO: raise IOError("Writing error")
             raise IOError("Reading file error")

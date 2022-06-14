@@ -125,8 +125,6 @@ class TestOrder(unittest.TestCase):
         with self.assertRaisesRegex(IOError, 'Reading file error'):
             self.order.updateCurrentOrder('')
 
-    # TODO: and the final test test_integration(self)
-    # TODO: it should read order from file, write to another file and compare both.
     def test_integration(self):
         test_order = self.order.createNewOrder(self.order_filename_etalon)
         test_order.exportToFile(self.filename_test_write_order)
